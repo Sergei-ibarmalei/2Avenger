@@ -13,10 +13,14 @@ class Bullet : public Drawable
 
     public:
     Bullet(SDL_Renderer* r, const string& file_name, Bullet_direction dir = Bullet_direction::NONE);
+    Bullet(const Bullet& b);
     ~Bullet();
     void move_();
     void draw_();
     Bullet_direction& Direction() {return bullet_direction;}
+    bool Is_visible() {return is_visible;}
+
+    //void operator=(const Bullet& b);
     
 
 };

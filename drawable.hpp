@@ -13,15 +13,20 @@ class Drawable
     Ltexture* lt = nullptr;
     plot_type upleftcorner;
     bool init = true;
+    SDL_Renderer* render;
+    string name;
 
     public:
     Drawable(SDL_Renderer* r , const string& file_name = "");
+    Drawable(const Drawable& d);
     Drawable() {}
     ~Drawable() {}
     plot_type& UpLeftCorner() {return upleftcorner;}
     virtual void move_() = 0;
     virtual void draw_() = 0;
     bool Init_status() const {return init;}
+    //SDL_Renderer* Render() {return render;}
+    //string Name ()  {return name;}
 
 };
 

@@ -7,4 +7,13 @@ Drawable::Drawable(SDL_Renderer* r, const string& file_name)
     {
         init = false;
     }
+    render = r;
+    name = file_name;
+}
+
+Drawable::Drawable(const Drawable& d)
+{
+    lt = new Ltexture(render, name);
+    upleftcorner = d.upleftcorner;
+    init = d.init;
 }

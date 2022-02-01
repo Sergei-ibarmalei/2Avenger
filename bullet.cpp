@@ -51,3 +51,10 @@ void Bullet::draw_()
 {
     lt->render(upleftcorner.x, upleftcorner.y);
 }
+
+
+Bullet::Bullet(const Bullet& b) : Drawable(b)
+{
+    bullet_direction = b.bullet_direction;
+}
+

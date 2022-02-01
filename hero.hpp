@@ -23,6 +23,7 @@ class Hero : public Drawable
     hero_position& Position() {return position;}
     void move_();
     void draw_();
+    int Sprite_width() const {return sprite_width;}
 
 };
 
