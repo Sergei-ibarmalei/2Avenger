@@ -5,11 +5,12 @@
 
 struct Bullet_hero_listNode
 {
-    Bullet pbullet;
+    Bullet bullet;
     Bullet_hero_listNode* next = nullptr;
 
-    Bullet_hero_listNode(const Bullet b): pbullet(b) {}
+    Bullet_hero_listNode(const Bullet b): bullet(b) {}
     ~Bullet_hero_listNode() {next = nullptr;}
+    //Bullet& Bullet() {return bullet;}
 };
 
 /* Bullet_hero_listNode::~Bullet_hero_listNode()
@@ -37,6 +38,8 @@ class Bullet_hero_list
     ~Bullet_hero_list();
     void Push_back(const Bullet& bullet);
     bool Init_status() const {return init;}
+    Bullet_hero_listNode* First() {return first;}
+    void SetFirst(Bullet_hero_listNode* f) { first = f;}
 
 
 };

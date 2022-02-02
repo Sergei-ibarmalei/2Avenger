@@ -14,7 +14,8 @@ void check_ship_move(SDL_Event& e, Hero& hero);
 void draw(Drawable& object);
 void draw_sky(Starsky& sky);
 void draw_backs(Backgrounds& backs, GAME_HISTORY_NAMES history);
-
+void draw_hero_bullets(Bullet_hero_listNode* ln);
+void draw_bullets(Bullet_hero_list& hl);
 
 int main(int argc, char* argv[])
 {
@@ -133,3 +134,22 @@ void check_ship_move(SDL_Event& e, Hero& hero)
     }
 }
 
+
+
+
+
+void draw_bullets(Bullet_hero_list& hl)
+{
+    if (!hl.First()) return;
+    auto tmp = hl.First();
+    draw_hero_bullets(tmp);
+    hl.SetFirst(tmp);
+}
+
+void draw_hero_bullets(Bullet_hero_listNode* ln)
+{
+    if (!ln) return;
+    draw(ln->bullet);
+    ln = ln->next;
+    draw_hero_bullets(ln);
+}
