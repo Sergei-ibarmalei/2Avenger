@@ -8,7 +8,7 @@ class Hero : public Drawable
 {
     protected:
     Move_direction direction;
-    hero_position position;
+    hero_position position = hero_position::CENTER;
     SDL_Rect gSprites[3];
     int sprite_height[3];
     int sprite_width;

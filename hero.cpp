@@ -19,7 +19,8 @@ Hero::Hero(SDL_Renderer* r, const string& file_name) : Drawable(r, file_name)
 void Hero::Set_bullet_start_pos()
 {
     bullet_start_pos.x = upleftcorner.x + sprite_width + BULLET_START_X_SHIFT;
-    bullet_start_pos.y = gSprites[static_cast<int>(position)].h / 2;
+    //bullet_start_pos.y = upleftcorner.y + 2 + gSprites[static_cast<int>(position)].h / 2;
+    bullet_start_pos.y = upleftcorner.y + gSprites[1].h / 2;
 }
 
 Hero::~Hero()
