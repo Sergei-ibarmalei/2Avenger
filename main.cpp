@@ -73,6 +73,11 @@ int main(int argc, char* argv[])
         draw(hero);
         draw_bullets(bhl);
         hero_move_bullest(bhl, time_to_cleanup_bhl);
+        if (time_to_cleanup_bhl)
+        {
+            bhl.CleanUP_from_invisible();
+            time_to_cleanup_bhl = false;
+        }
         SDL_RenderPresent(mysdl.gRenderer);
     }
     return 0;
