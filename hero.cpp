@@ -12,6 +12,14 @@ Hero::Hero(SDL_Renderer* r, const string& file_name) : Drawable(r, file_name)
     loadMedia();
     position = hero_position::CENTER;
     upleftcorner = {S_W/2 - lt->get_mTexture_w()/2, S_H/2 - sprite_height[CENTERSHIP]/2};
+    Set_bullet_start_pos();
+}
+
+//Установка стартовой позиции пули
+void Hero::Set_bullet_start_pos()
+{
+    bullet_start_pos.x = upleftcorner.x + sprite_width + BULLET_START_X_SHIFT;
+    bullet_start_pos.y = gSprites[static_cast<int>(position)].h / 2;
 }
 
 Hero::~Hero()
@@ -76,6 +84,8 @@ void Hero::move_()
         case Move_direction::NONE:
         default: {}
     }
+
+    Set_bullet_start_pos();
 }
 
 

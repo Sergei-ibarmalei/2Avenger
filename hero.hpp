@@ -15,6 +15,8 @@ class Hero : public Drawable
     void loadMedia();
     bool init = true;
     bool is_out_of_border();
+    plot_type bullet_start_pos;
+    void Set_bullet_start_pos();
 
     public:
     Hero(SDL_Renderer* r, const string& file_name);
@@ -24,6 +26,7 @@ class Hero : public Drawable
     void move_();
     void draw_();
     int Sprite_width() const {return sprite_width;}
+    plot_type& Bullet_start_position() {return bullet_start_pos;}
 
 };
 
