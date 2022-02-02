@@ -2,7 +2,8 @@
 #include "hero.hpp"
 #include "starsky.hpp"
 #include "backgrounds.hpp"
-#include "bullet.hpp"
+//#include "bullet.hpp"
+#include "hero_bullet_list.hpp"
 
 static mySDL mysdl;
 static SDL_Event e;
@@ -21,11 +22,14 @@ int main(int argc, char* argv[])
     Hero hero(mysdl.gRenderer, "ships_2.png");
     Starsky sky(mysdl.gRenderer, "one_star.png");
     Backgrounds backs(mysdl.gRenderer);
-    Bullet hero_bullet(mysdl.gRenderer, "blue_bullet.png", Bullet_direction::RIGHT) ;
+    Bullet bullet(mysdl.gRenderer, "blue_bullet_1.png");
+    Bullet_hero_list b_h_list;
     if (!hero.Init_status()) return 1; 
     if (!sky.Init_status()) return 1;
     if (!backs.Init_status()) return 1;
-    if (!hero_bullet.Init_status()) return 1;
+    if (!bullet.Init_status()) return 1;
+    if(!b_h_list.Init_status()) return 1;
+    
 
     bool quit = false;
 

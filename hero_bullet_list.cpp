@@ -1,18 +1,19 @@
 #include "hero_bullet_list.hpp"
 
+Bullet_hero_list::Bullet_hero_list()
+{
+    first = last = nullptr;
+}
+
 Bullet_hero_list::~Bullet_hero_list()
 {
-    if (first)
+
+    while (first)
     {
+        Bullet_hero_listNode* tmp = first->next;
         delete first;
-    }
-    if (last)
-    {
-        delete last;
-    }
-    first = nullptr;
-    last = nullptr;
-    //render = nullptr;
+        first = tmp;
+    } 
 }
 
 bool Bullet_hero_list::Is_empty()
@@ -23,6 +24,7 @@ bool Bullet_hero_list::Is_empty()
 void Bullet_hero_list::Push_back(const Bullet& bullet)
 {
     Bullet_hero_listNode* p = new Bullet_hero_listNode{bullet};
+    if(!p->pbullet.Init_status()) init = false;
     if (Is_empty())
     {
         first = p;
