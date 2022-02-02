@@ -5,10 +5,10 @@
 
 struct Bullet_hero_listNode
 {
-    Bullet bullet;
+    Bullet* bullet;
     Bullet_hero_listNode* next = nullptr;
 
-    Bullet_hero_listNode(const Bullet b): bullet(b) {}
+    Bullet_hero_listNode(Bullet* pb): bullet(pb) {}
     ~Bullet_hero_listNode() {next = nullptr;}
     //Bullet& Bullet() {return bullet;}
 };
@@ -36,7 +36,7 @@ class Bullet_hero_list
     //Bullet_hero_list(SDL_Renderer* r, const string& file_name, Bullet_direction dir);
     Bullet_hero_list(const Bullet_hero_list&  ) {}
     ~Bullet_hero_list();
-    void Push_back(const Bullet& bullet);
+    void Push_back(Bullet* pbullet);
     bool Init_status() const {return init;}
     Bullet_hero_listNode* First() {return first;}
     void SetFirst(Bullet_hero_listNode* f) { first = f;}

@@ -149,7 +149,7 @@ void draw_bullets(Bullet_hero_list& hl)
 void draw_hero_bullets(Bullet_hero_listNode* ln)
 {
     if (!ln) return;
-    draw(ln->bullet);
+    draw(*ln->bullet);
     ln = ln->next;
     draw_hero_bullets(ln);
 }
