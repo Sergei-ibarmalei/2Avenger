@@ -33,13 +33,14 @@ bool Bullet::is_bullet_out_of_border()
 
 void Bullet::move_()
 {
+    if (!is_visible) return;
     switch (bullet_direction)
     {
         case Bullet_direction::LEFT:
-            upleftcorner.x += BULLET_SPEED;
+            upleftcorner.x -= BULLET_SPEED;
             break;
         case Bullet_direction::RIGHT:
-            upleftcorner.x -= BULLET_SPEED;
+            upleftcorner.x += BULLET_SPEED;
             break;
         case Bullet_direction::NONE:
         case Bullet_direction::COMPLEX:

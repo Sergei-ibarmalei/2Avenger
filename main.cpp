@@ -16,6 +16,9 @@ void draw_sky(Starsky& sky);
 void draw_backs(Backgrounds& backs, GAME_HISTORY_NAMES history);
 void draw_hero_bullets(Bullet_hero_listNode* ln);
 void draw_bullets(Bullet_hero_list& hl);
+void hero_move_bullest(Bullet_hero_list& hl);
+void move_bullet_hero(Bullet_hero_listNode* bullet);
+
 
 int main(int argc, char* argv[])
 {
@@ -67,6 +70,7 @@ int main(int argc, char* argv[])
         sky.move();
         draw(hero);
         draw_bullets(bhl);
+        hero_move_bullest(bhl);
         SDL_RenderPresent(mysdl.gRenderer);
     }
     return 0;
@@ -133,7 +137,7 @@ void check_ship_move(SDL_Event& e, Hero& hero, Bullet_hero_list& bhl)
         }
         case SDLK_SPACE:
         {
-            Bullet* b = new Bullet(mysdl.gRenderer, "blue_bullet_1.png", hero.Bullet_start_position());
+            Bullet* b = new Bullet(mysdl.gRenderer, "blue_bullet_1.png", hero.Bullet_start_position(), Bullet_direction::RIGHT);
             if (!b->Init_status()) return;
             bhl.Push_back(b);
             break;
@@ -164,3 +168,22 @@ void draw_hero_bullets(Bullet_hero_listNode* ln)
     ln = ln->next;
     draw_hero_bullets(ln);
 }
+
+//Движение выстрелов героя
+void hero_move_bullest(Bullet_hero_list& hl)
+{
+    if (!hl.First()) return;
+    auto tmp = hl.First();
+    move_bullet_hero(tmp);
+    hl.SetFirst(tmp);
+}
+
+//Движение выстрелов из списка в рекурсии
+void move_bullet_hero(Bullet_hero_listNode* bullet)
+{
+    if (!bullet) return;
+    bullet->bullet->move_();
+    bullet = bullet->next;
+    move_bullet_hero(bullet);
+}
+
