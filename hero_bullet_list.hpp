@@ -25,6 +25,7 @@ class Bullet_hero_list
  
     bool Is_empty();
     bool init = true;
+    void delete_invisible(Bullet_hero_listNode** pcur);
 
     public:
     Bullet_hero_list();
@@ -34,6 +35,7 @@ class Bullet_hero_list
     bool Init_status() const {return init;}
     Bullet_hero_listNode* First() {return first;}
     void SetFirst(Bullet_hero_listNode* f) { first = f;}
+    void CleanUP_from_invisible();
 
 
 };

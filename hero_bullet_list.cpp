@@ -33,3 +33,25 @@ void Bullet_hero_list::Push_back(Bullet* pbullet)
     last->next = p;
     last = p;
 }
+
+void Bullet_hero_list::CleanUP_from_invisible()
+{
+    delete_invisible(&first);
+}
+
+void Bullet_hero_list::delete_invisible(Bullet_hero_listNode** pcur)
+{
+    while (*pcur)
+    {
+        if ( !(*pcur)->bullet->Is_visible())
+        {
+            Bullet_hero_listNode* tmp = *pcur;
+            *pcur = (*pcur)->next;
+            delete tmp;
+        }
+        else
+        {
+            pcur = &(*pcur)->next;
+        }
+    }
+}
