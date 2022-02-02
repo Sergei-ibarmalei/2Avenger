@@ -9,6 +9,9 @@ static mySDL mysdl;
 static SDL_Event e;
 static GAME_HISTORY_NAMES history = GAME_HISTORY_NAMES::FIRST;
 
+//Пора чистить список выстрелов героя
+static bool time_to_cleanup_bhl = false;
+
 
 void check_ship_move(SDL_Event& e, Hero& hero, Bullet_hero_list& bhl);
 void draw(Drawable& object);
@@ -16,8 +19,8 @@ void draw_sky(Starsky& sky);
 void draw_backs(Backgrounds& backs, GAME_HISTORY_NAMES history);
 void draw_hero_bullets(Bullet_hero_listNode* ln);
 void draw_bullets(Bullet_hero_list& hl);
-void hero_move_bullest(Bullet_hero_list& hl);
-void move_bullet_hero(Bullet_hero_listNode* bullet);
+void hero_move_bullest(Bullet_hero_list& hl, bool& time_to_cleanup_bhl);
+void move_bullet_hero(Bullet_hero_listNode* bullet, bool& time_to_cleanup_bhl);
 
 
 int main(int argc, char* argv[])
@@ -26,12 +29,11 @@ int main(int argc, char* argv[])
     Hero hero(mysdl.gRenderer, "ships_2.png");
     Starsky sky(mysdl.gRenderer, "one_star.png");
     Backgrounds backs(mysdl.gRenderer);
-    //Bullet bullet(mysdl.gRenderer, "blue_bullet_1.png");
+    //Список выстрелов героя
     Bullet_hero_list bhl;
     if (!hero.Init_status()) return 1; 
     if (!sky.Init_status()) return 1;
     if (!backs.Init_status()) return 1;
-    //if (!bullet.Init_status()) return 1;
     if(!bhl.Init_status()) return 1;
     
 
@@ -70,7 +72,7 @@ int main(int argc, char* argv[])
         sky.move();
         draw(hero);
         draw_bullets(bhl);
-        hero_move_bullest(bhl);
+        hero_move_bullest(bhl, time_to_cleanup_bhl);
         SDL_RenderPresent(mysdl.gRenderer);
     }
     return 0;
@@ -98,6 +100,7 @@ void draw_sky(Starsky& sky)
 //Отрисовка заднего фона
 void draw_backs(Backgrounds& backs, GAME_HISTORY_NAMES history)
 {
+    //Берем картинку в зависимости от значения переменной history
     auto ptr = &backs.All_back_fons()[static_cast<int>(history)];
     draw(*ptr);
 }
@@ -170,20 +173,24 @@ void draw_hero_bullets(Bullet_hero_listNode* ln)
 }
 
 //Движение выстрелов героя
-void hero_move_bullest(Bullet_hero_list& hl)
+void hero_move_bullest(Bullet_hero_list& hl, bool& time_to_cleanup_bhl)
 {
     if (!hl.First()) return;
     auto tmp = hl.First();
-    move_bullet_hero(tmp);
+    move_bullet_hero(tmp, time_to_cleanup_bhl);
     hl.SetFirst(tmp);
 }
 
 //Движение выстрелов из списка в рекурсии
-void move_bullet_hero(Bullet_hero_listNode* bullet)
+void move_bullet_hero(Bullet_hero_listNode* bullet, bool& time_to_cleanup_bhl)
 {
     if (!bullet) return;
     bullet->bullet->move_();
+    if (!bullet->bullet->Is_visible()) 
+    {
+        time_to_cleanup_bhl = true;
+    }
     bullet = bullet->next;
-    move_bullet_hero(bullet);
+    move_bullet_hero(bullet, time_to_cleanup_bhl);
 }
 

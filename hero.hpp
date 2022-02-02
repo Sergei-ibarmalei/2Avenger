@@ -26,6 +26,7 @@ class Hero : public Drawable
     void move_();
     void draw_();
     int Sprite_width() const {return sprite_width;}
+    //Начальное полоежение выстрела
     plot_type& Bullet_start_position() {return bullet_start_pos;}
 
 };

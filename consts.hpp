@@ -37,6 +37,8 @@ const int FAST_STAR_SPEED {3};
 
 
 //BULLET
+
+//Напревление выстрела
 enum class Bullet_direction {LEFT, RIGHT, COMPLEX, NONE};
 const int BULLET_SPEED {3};
 const int BULLET_START_X_SHIFT {3};

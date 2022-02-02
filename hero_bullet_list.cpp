@@ -24,7 +24,6 @@ bool Bullet_hero_list::Is_empty()
 void Bullet_hero_list::Push_back(Bullet* pbullet)
 {
     Bullet_hero_listNode* p = new Bullet_hero_listNode{pbullet};
-    //if(!p->bullet.Init_status()) init = false;
     if (Is_empty())
     {
         first = p;
