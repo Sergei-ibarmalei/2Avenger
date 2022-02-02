@@ -23,12 +23,12 @@ int main(int argc, char* argv[])
     Hero hero(mysdl.gRenderer, "ships_2.png");
     Starsky sky(mysdl.gRenderer, "one_star.png");
     Backgrounds backs(mysdl.gRenderer);
-    Bullet bullet(mysdl.gRenderer, "blue_bullet_1.png");
+    //Bullet bullet(mysdl.gRenderer, "blue_bullet_1.png");
     Bullet_hero_list b_h_list;
     if (!hero.Init_status()) return 1; 
     if (!sky.Init_status()) return 1;
     if (!backs.Init_status()) return 1;
-    if (!bullet.Init_status()) return 1;
+    //if (!bullet.Init_status()) return 1;
     if(!b_h_list.Init_status()) return 1;
     
 

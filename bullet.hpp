@@ -12,7 +12,7 @@ class Bullet : public Drawable
     bool is_visible = true;
 
     public:
-    Bullet(SDL_Renderer* r, const string& file_name, Bullet_direction dir = Bullet_direction::NONE);
+    Bullet(SDL_Renderer* r, const string& file_name, const plot_type& start_pos, Bullet_direction dir = Bullet_direction::NONE);
     Bullet(const Bullet& b);
     ~Bullet();
     void move_();
