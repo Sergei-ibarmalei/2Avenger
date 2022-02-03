@@ -20,7 +20,7 @@ class Drawable
     Drawable(SDL_Renderer* r , const string& file_name = "");
     Drawable(const Drawable& d);
     Drawable() {}
-    ~Drawable() {}
+    virtual ~Drawable();
     plot_type& UpLeftCorner() {return upleftcorner;}
     virtual void move_() = 0;
     virtual void draw_() = 0;

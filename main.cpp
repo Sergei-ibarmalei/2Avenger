@@ -145,7 +145,7 @@ void check_ship_move(SDL_Event& e, Hero& hero, Bullet_hero_list& bhl)
         }
         case SDLK_SPACE:
         {
-            Bullet* b = new Bullet(mysdl.gRenderer, "blue_bullet_1.png", hero.Bullet_start_position(), Bullet_direction::RIGHT);
+            Bullet* b = new Bullet(mysdl.gRenderer, "red_bullet_1.png", hero.Bullet_start_position(), Bullet_direction::RIGHT);
             if (!b->Init_status()) return;
             bhl.Push_back(b);
             break;

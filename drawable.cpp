@@ -18,3 +18,9 @@ Drawable::Drawable(const Drawable& d)
     upleftcorner = d.upleftcorner;
     init = d.init;
 }
+
+Drawable::~Drawable()
+{
+    //delete lt;
+    //lt = nullptr;
+}
