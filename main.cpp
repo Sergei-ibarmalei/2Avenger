@@ -3,7 +3,7 @@
 #include "starsky.hpp"
 #include "backgrounds.hpp"
 //#include "bullet.hpp"
-#include "hero_bullet_list.hpp"
+#include "bullet_list.hpp"
 
 static mySDL mysdl;
 static SDL_Event e;
@@ -13,14 +13,14 @@ static GAME_HISTORY_NAMES history = GAME_HISTORY_NAMES::FIRST;
 static bool time_to_cleanup_bhl = false;
 
 
-void check_ship_move(SDL_Event& e, Hero& hero, Bullet_hero_list& bhl);
+void check_ship_move(SDL_Event& e, Hero& hero, Bullet_list& bhl, bool& quit);
 void draw(Drawable& object);
 void draw_sky(Starsky& sky);
 void draw_backs(Backgrounds& backs, GAME_HISTORY_NAMES history);
-void draw_hero_bullets(Bullet_hero_listNode* ln);
-void draw_bullets(Bullet_hero_list& hl);
-void hero_move_bullest(Bullet_hero_list& hl, bool& time_to_cleanup_bhl);
-void move_bullet_hero(Bullet_hero_listNode* bullet, bool& time_to_cleanup_bhl);
+void draw_hero_bullets(Bullet_listNode* ln);
+void draw_bullets(Bullet_list& hl);
+void hero_move_bullest(Bullet_list& hl, bool& time_to_cleanup_bhl);
+void move_bullet_hero(Bullet_listNode* bullet, bool& time_to_cleanup_bhl);
 
 
 int main(int argc, char* argv[])
@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
     Starsky sky(mysdl.gRenderer, "one_star.png");
     Backgrounds backs(mysdl.gRenderer);
     //Список выстрелов героя
-    Bullet_hero_list bhl;
+    Bullet_list bhl;
     if (!hero.Init_status()) return 1; 
     if (!sky.Init_status()) return 1;
     if (!backs.Init_status()) return 1;
@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
             if (e.type == SDL_QUIT) quit = true;
             else if (e.type == SDL_KEYDOWN)
             {
-                check_ship_move(e, hero, bhl);
+                check_ship_move(e, hero, bhl, quit);
             }
             else if (e.type == SDL_KEYUP)
             {
@@ -111,7 +111,7 @@ void draw_backs(Backgrounds& backs, GAME_HISTORY_NAMES history)
 }
 
 //Проверка нажатия клавиш для движения героя
-void check_ship_move(SDL_Event& e, Hero& hero, Bullet_hero_list& bhl)
+void check_ship_move(SDL_Event& e, Hero& hero, Bullet_list& bhl, bool& quit)
 {
     switch (e.key.keysym.sym)
     {
@@ -145,8 +145,8 @@ void check_ship_move(SDL_Event& e, Hero& hero, Bullet_hero_list& bhl)
         }
         case SDLK_SPACE:
         {
-            Bullet* b = new Bullet(mysdl.gRenderer, "red_bullet_1.png", hero.Bullet_start_position(), Bullet_direction::RIGHT);
-            if (!b->Init_status()) return;
+            Bullet* b = new Bullet(mysdl.gRenderer, "blue_bullet_1.png", hero.Bullet_start_position(), Bullet_direction::RIGHT);
+            if (!b->Init_status()) quit = true;
             bhl.Push_back(b);
             break;
         }
@@ -159,7 +159,7 @@ void check_ship_move(SDL_Event& e, Hero& hero, Bullet_hero_list& bhl)
 
 
 //Отрисовка выстрелов героя
-void draw_bullets(Bullet_hero_list& hl)
+void draw_bullets(Bullet_list& hl)
 {
     if (!hl.First()) return;
     auto tmp = hl.First();
@@ -169,7 +169,7 @@ void draw_bullets(Bullet_hero_list& hl)
 
 
 //Отрисовка выстрелов из списка в рекурсии
-void draw_hero_bullets(Bullet_hero_listNode* ln)
+void draw_hero_bullets(Bullet_listNode* ln)
 {
     if (!ln) return;
     draw(*ln->bullet);
@@ -178,7 +178,7 @@ void draw_hero_bullets(Bullet_hero_listNode* ln)
 }
 
 //Движение выстрелов героя
-void hero_move_bullest(Bullet_hero_list& hl, bool& time_to_cleanup_bhl)
+void hero_move_bullest(Bullet_list& hl, bool& time_to_cleanup_bhl)
 {
     if (!hl.First()) return;
     auto tmp = hl.First();
@@ -187,7 +187,7 @@ void hero_move_bullest(Bullet_hero_list& hl, bool& time_to_cleanup_bhl)
 }
 
 //Движение выстрелов из списка в рекурсии
-void move_bullet_hero(Bullet_hero_listNode* bullet, bool& time_to_cleanup_bhl)
+void move_bullet_hero(Bullet_listNode* bullet, bool& time_to_cleanup_bhl)
 {
     if (!bullet) return;
     bullet->bullet->move_();

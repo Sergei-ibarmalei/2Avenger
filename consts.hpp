@@ -40,7 +40,7 @@ const int FAST_STAR_SPEED {3};
 
 //Напревление выстрела
 enum class Bullet_direction {LEFT, RIGHT, COMPLEX, NONE};
-const int BULLET_SPEED {2};
+const int BULLET_SPEED {5};
 const int BULLET_START_X_SHIFT {3};
 //HERO BULLET
 //enum class Hero_bullet_kind {BLUE_BULLET, RED_BULLET, GREEN_BULLET};
