@@ -13,6 +13,7 @@ class Drawable
     Ltexture* lt = nullptr;
     plot_type upleftcorner;
     bool init = true;
+    bool is_visible = true;
     //SDL_Renderer* render;
     //string name;
 
@@ -25,6 +26,7 @@ class Drawable
     virtual void move_() = 0;
     virtual void draw_() = 0;
     bool Init_status() const {return init;}
+    bool Is_visible() {return is_visible;}
     //SDL_Renderer* Render() {return render;}
     //string Name ()  {return name;}
 

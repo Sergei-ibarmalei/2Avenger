@@ -4,7 +4,6 @@ project(main)
 #SET(MYCOMPILE_FLAGS "-Wall")
 
 set(SOURCES
-          bullet_list.cpp
           drawable.cpp 
           hero.cpp 
           Ltexture.cpp 
