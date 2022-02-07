@@ -5,6 +5,7 @@
 
 
 
+
 struct Drawable_listNode
 {
     Drawable* object;
@@ -17,8 +18,6 @@ struct Drawable_listNode
         object = nullptr;
     }
 };
-
-
 
 
 template <class T>

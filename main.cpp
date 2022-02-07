@@ -10,21 +10,14 @@ static SDL_Event e;
 static GAME_HISTORY_NAMES history = GAME_HISTORY_NAMES::FIRST;
 
 //Пора чистить список выстрелов героя
-static bool time_to_cleanup_bhl = false;
+static bool time_to_cleanup_hbl = false;
 
 
-//void check_ship_move(SDL_Event& e, Hero& hero, Bullet_list& bhl, bool& quit);
 void check_ship_move(SDL_Event& e, Hero& hero, Object_list<Drawable_listNode>& bhl, bool& quit);
 void draw(Drawable& object);
 void draw_sky(Starsky& sky);
 void draw_backs(Backgrounds& backs, GAME_HISTORY_NAMES history);
-//void draw_hero_bullets(Bullet_listNode* node);
-//void draw_bullets(Bullet_list& hl);
-//void draw_hero_bullest(Drawable_listNode* node);
 void draw_node(Drawable_listNode* node);
-//void hero_move_bullest(Bullet_list& hl, bool& time_to_cleanup_bhl);
-//void move_bullets
-//void move_bullet_hero(Bullet_listNode* bullet, bool& time_to_cleanup_bhl);
 void move_node(Drawable_listNode* node, bool& time_to_cleanup_bhl);
 
 int main(int argc, char* argv[])
@@ -75,14 +68,15 @@ int main(int argc, char* argv[])
         sky.move();
         draw(hero);
         draw_node(HeroBulletList.First());
-        move_node(HeroBulletList.First(), time_to_cleanup_bhl);
-        if (time_to_cleanup_bhl)
+        move_node(HeroBulletList.First(), time_to_cleanup_hbl);
+        if (time_to_cleanup_hbl)
         {
             HeroBulletList.CleanUP_from_invisible();
-            time_to_cleanup_bhl = false;
+            time_to_cleanup_hbl = false;
         }
         SDL_RenderPresent(mysdl.gRenderer);
     }
+    close(mysdl);
     return 0;
 }
 
