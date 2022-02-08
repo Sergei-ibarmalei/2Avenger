@@ -4,6 +4,8 @@ project(main)
 #SET(MYCOMPILE_FLAGS "-Wall")
 
 set(SOURCES
+          bez.cpp
+          alien_small.cpp
           drawable.cpp 
           hero.cpp 
           Ltexture.cpp 
