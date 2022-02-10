@@ -1,11 +1,9 @@
 #include "engine.hpp"
 #include "sdl_init.hpp"
 #include "hero.hpp"
-#include "starsky.hpp"
 #include "backgrounds.hpp"
 #include "bullet.hpp"
 #include "object_list.hpp"
-//#include "fleet.hpp"
 #include "fl.hpp"
 
 static mySDL mysdl;
@@ -19,8 +17,6 @@ static bool time_to_cleanup_fleet = false;
 
 void check_ship_move(SDL_Event& e, Hero& hero, Object_list<Drawable_listNode>& bhl, bool& quit);
 void draw(Drawable& object);
-void draw_sky(Starsky& sky);
-void draw_backs(Backgrounds& backs, GAME_HISTORY_NAMES history);
 void draw_node(Drawable_listNode* node);
 void move_node(Drawable_listNode* node, bool& time_to_cleanup_bhl);
 
@@ -28,14 +24,13 @@ int main(int argc, char* argv[])
 {
     if(!init(mysdl, "2Avenger")) return 1;
     Hero hero(mysdl.gRenderer, "ships_2.png");
-    Starsky sky(mysdl.gRenderer, "one_star.png");
-    Backgrounds backs(mysdl.gRenderer);
+    Starsky* sky = init_sky(mysdl, "one_star.png");
+    Backgrounds* backs = init_backs(mysdl);
     //Список выстрелов героя
     Object_list<Drawable_listNode> HeroBulletList;
     Fl fleet(mysdl.gRenderer, "small_alien.png", 3);
     if (!hero.Init_status()) return 1; 
-    if (!sky.Init_status()) return 1;
-    if (!backs.Init_status()) return 1;
+    if (!mysdl.all_init_ok) return 1;
     
     
 
@@ -71,7 +66,7 @@ int main(int argc, char* argv[])
         SDL_RenderClear(mysdl.gRenderer);
         draw_backs(backs, history);
         draw_sky(sky);
-        sky.move();
+        sky->move();
         draw(hero);
         draw_node(HeroBulletList.First());
         move_node(HeroBulletList.First(), time_to_cleanup_hbl);
@@ -91,26 +86,7 @@ int main(int argc, char* argv[])
 
 
 
-//Отрисовка звездного неба в движении
-void draw_sky(Starsky& sky)
-{
-    auto ptr_slow = &sky.Slow_stars()[0];
-    auto ptr_fast = &sky.Fast_stars()[0];
-    for (;;ptr_slow++, ptr_fast++)
-    {
-        if(ptr_slow == &sky.Slow_stars()[SLOW_STAR]) break;
-        draw(*ptr_slow);
-        draw(*ptr_fast);
-    }
-}
 
-//Отрисовка заднего фона
-void draw_backs(Backgrounds& backs, GAME_HISTORY_NAMES history)
-{
-    //Берем картинку в зависимости от значения переменной history
-    auto ptr = &backs.All_back_fons()[static_cast<int>(history)];
-    draw(*ptr);
-}
 
 //Проверка нажатия клавиш для движения героя
 void check_ship_move(SDL_Event& e, Hero& hero, Object_list<Drawable_listNode>& hero_bullet_list, bool& quit)

@@ -5,14 +5,21 @@
 //#include "hero.hpp"
 //#include "object_list.hpp"
 //#include "bullet.hpp"
-//#include "mysdl.hpp"
+#include "mysdl.hpp"
+#include "starsky.hpp"
+#include "backgrounds.hpp"
+#include "consts.hpp"
 
 
 void draw(Drawable& object);
 
 
-//Проверка нажатия клавиш для движения героя
-//void check_ship_move(mySDL& mysdl, SDL_Event& e, Hero& hero, Object_list<Drawable_listNode>& hero_bullet_list, bool& quit);
+Starsky* init_sky(mySDL& mysdl, const string& file_name);
 
+Backgrounds* init_backs(mySDL& mysdl);
+
+void draw_sky(Starsky* sky);
+
+void draw_backs(Backgrounds* backs, GAME_HISTORY_NAMES history);
 
 #endif
