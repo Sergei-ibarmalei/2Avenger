@@ -8,7 +8,13 @@ void draw(Drawable& object)
 Starsky* init_sky(mySDL& mysdl, const string& file_name)
 {
     Starsky* sky = new Starsky {mysdl.gRenderer, file_name};
-    if (!sky->Init_status()) mysdl.all_init_ok = false;
+    if (!sky->Init_status())
+    {
+        delete sky;
+        sky = nullptr;
+        mysdl.all_init_ok = false;
+        return sky;
+    }
     return sky;
 }
 
@@ -35,4 +41,28 @@ void draw_backs(Backgrounds* backs, GAME_HISTORY_NAMES history)
 {
     auto ptr = &backs->All_back_fons()[static_cast<int>(history)];
     draw(*ptr);
+}
+
+void close_hero_sky_backs(Hero* h, Starsky* s, Backgrounds* b)
+{
+    delete s;
+    s = nullptr;
+    delete b;
+    b = nullptr;
+    delete h;
+    h = nullptr;
+    
+}
+
+Hero* init_hero(mySDL& mysdl, const string& file_name)
+{
+    Hero* hero = new Hero {mysdl.gRenderer, file_name};
+    if (!hero->Init_status())
+    {
+        delete hero;
+        hero = nullptr;
+        mysdl.all_init_ok = false;
+        return hero;
+    }
+    return hero;
 }
