@@ -82,8 +82,6 @@ int main(int argc, char* argv[])
         }
         fleet.Draw();
         fleet.Move(time_to_cleanup_fleet);
-        //fleet.Fleet_draw();
-        //fleet.Fleet_move(time_to_cleanup_fleet);
         SDL_RenderPresent(mysdl.gRenderer);
     }
     close(mysdl);

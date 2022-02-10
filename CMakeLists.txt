@@ -9,8 +9,6 @@ set(SOURCES
           bez.cpp
           al.cpp 
           fl.cpp
-          #alien_small.cpp
-          #fleet.cpp
           drawable.cpp 
           hero.cpp 
           Ltexture.cpp 

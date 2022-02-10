@@ -24,7 +24,6 @@ class Fl
     ~Fl();
     void Draw();
     void Move(bool& time_to_cleanUP);
-    //plot_type GetApPoint() {return apperar_point;}
 
 };
 

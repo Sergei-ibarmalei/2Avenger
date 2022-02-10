@@ -11,7 +11,6 @@ Al::Al(SDL_Renderer* r, const string& fn, const plot_type& ap, int count_in_raw_
 void Al::SetCurvePath(plot_type* curve)
 {
     curve_way = curve;
-    //length_curve_way = length;
 }
 
 Al::~Al()
@@ -39,7 +38,6 @@ void Al::make_stright_way()
     }
 
     start_curve_way = stright_way[length_stright_way - 1 ];
-    //std::cout << "\nIn Al start_curve_way: [" << start_curve_way.x << ',' << start_curve_way.y << "]\n";
 }
 
 void Al::move_()
@@ -50,12 +48,10 @@ void Al::move_()
         if (current_walking_step == length_stright_way)
         {
             walking_intro = false;
-            //std::cout << "\n[" << stright_way[length_stright_way-1].x << ',' << stright_way[length_stright_way-1].y << "] end of stright way";
             current_walking_step = 0;
         }
         return;
     }
-    //std::cout << "\n[" << curve_way[0].x << ',' << curve_way[0].y << "] start of curve way";
     upleftcorner = curve_way[current_walking_step++];
     if (current_walking_step == ALIEN_BEZJE_PATH)
     {
