@@ -1,9 +1,6 @@
 #include "engine.hpp"
 
-/* void draw(Drawable& object)
-{
-    object.draw_();
-} */
+
 
 Starsky* init_sky(mySDL& mysdl, const string& file_name)
 {
@@ -56,8 +53,22 @@ Fl* init_fleet(mySDL& mysdl, const string& file_name, int count)
     return fleet;
 }
 
+
+Object_list<Drawable_listNode>* init_hero_bullet_list()
+{
+    Object_list<Drawable_listNode>* heroBulletList = new Object_list<Drawable_listNode> {};
+    return heroBulletList;
+}
+
+
+void close_bullet_list(Object_list<Drawable_listNode>* l)
+{
+    delete l;
+    l = nullptr;
+}
+
 //Проверка нажатия клавиш для движения героя
-void check_ship_move(mySDL& mysdl, SDL_Event& e, Hero* hero, Object_list<Drawable_listNode>& hero_bullet_list, bool& quit)
+void check_ship_move(mySDL& mysdl, SDL_Event& e, Hero* hero, Object_list<Drawable_listNode>* hero_bullet_list, bool& quit)
 {
     switch (e.key.keysym.sym)
     {
@@ -93,7 +104,7 @@ void check_ship_move(mySDL& mysdl, SDL_Event& e, Hero* hero, Object_list<Drawabl
         {
             Bullet* b = new Bullet(mysdl.gRenderer, "blue_bullet_1.png", hero->Bullet_start_position(), Bullet_direction::RIGHT);
             if (!b->Init_status()) quit = true;
-            hero_bullet_list.Push_back(b);
+            hero_bullet_list->Push_back(b);
             break;
         }
         default: {}

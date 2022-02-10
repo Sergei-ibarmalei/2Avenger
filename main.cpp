@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
     Starsky* sky = init_sky(mysdl, "one_star.png");
     Backgrounds* backs = init_backs(mysdl);
     //Список выстрелов героя
-    Object_list<Drawable_listNode> HeroBulletList;
+    Object_list<Drawable_listNode>* HeroBulletList = init_hero_bullet_list();
     Fl* fleet = init_fleet(mysdl, "small_alien.png", 3);
     if (!mysdl.all_init_ok) return 1;
     
@@ -61,11 +61,11 @@ int main(int argc, char* argv[])
         draw_sky(sky);
         sky->move();
         draw(*hero);
-        draw_node(HeroBulletList.First());
-        move_node(HeroBulletList.First(), time_to_cleanup_hbl);
+        draw_node(HeroBulletList->First());
+        move_node(HeroBulletList->First(), time_to_cleanup_hbl);
         if (time_to_cleanup_hbl)
         {
-            HeroBulletList.CleanUP_from_invisible();
+            HeroBulletList->CleanUP_from_invisible();
             time_to_cleanup_hbl = false;
         }
         fleet->Draw();
@@ -74,6 +74,8 @@ int main(int argc, char* argv[])
     }
     close_hero_sky_backs(hero, sky, backs);
     close_fleet(fleet);
+    close_bullet_list(HeroBulletList);
+    
 
     close(mysdl);
     return 0;

@@ -25,6 +25,8 @@ Hero* init_hero(mySDL& mysdl, const string& file_name);
 
 Fl* init_fleet(mySDL& mysdl, const string& file_name, int count);
 
+Object_list<Drawable_listNode>* init_hero_bullet_list();
+
 void draw_sky(Starsky* sky);
 
 void draw_backs(Backgrounds* backs, GAME_HISTORY_NAMES history);
@@ -33,6 +35,8 @@ void close_hero_sky_backs(Hero* h, Starsky* s, Backgrounds* b);
 
 void close_fleet(Fl* f);
 
-void check_ship_move(mySDL& mysdl, SDL_Event& e, Hero* hero, Object_list<Drawable_listNode>& hero_bullet_list, bool& quit);
+void close_bullet_list(Object_list<Drawable_listNode>* l);
+
+void check_ship_move(mySDL& mysdl, SDL_Event& e, Hero* hero, Object_list<Drawable_listNode>* hero_bullet_list, bool& quit);
 
 #endif
