@@ -1,5 +1,18 @@
 #include "alien_small.hpp"
 
+Alien_small::Alien_small(SDL_Renderer* r, const string& fn,const plot_type& rap, int nomber_in_row) : Drawable(r, fn)
+{
+    intro_path_length = ALIEN_INTRO_PATH + (ALIEN_SHIFT_X* nomber_in_row);
+    intro_path = new plot_type[intro_path_length];
+    upleftcorner.x = rap.x + (ALIEN_SHIFT_X * nomber_in_row);
+    upleftcorner.y = rap.y;
+    make_intro_path();
+
+
+}
+
+
+
 void Alien_small::move_()
 {
     if (walking_by_intro)
@@ -16,7 +29,7 @@ void Alien_small::move_()
     }
     upleftcorner = bezje_path[current_walking_index];
     current_walking_index ++;
-    if (current_walking_index == bezje_path_length)
+    if (current_walking_index == /*bezje_path_length*/ ALIEN_BEZJE_PATH)
     {
         current_walking_index = 0;
     }
@@ -36,23 +49,14 @@ Alien_small::~Alien_small()
     lt = nullptr;
 }
 
-void Alien_small::SetBezjePath(plot_type* bp, const int length)
+void Alien_small::SetBezjePath(plot_type* bp/*, const int length*/)
 {
     bezje_path = bp;
-    bezje_path_length = length;
+    //bezje_path_length = length;
 }
 
 
-Alien_small::Alien_small(SDL_Renderer* r, const string& fn,const plot_type& rap, int nomber_in_row) : Drawable(r, fn)
-{
-    intro_path_length = ALIEN_INTRO_PATH + (ALIEN_SHIFT_X* nomber_in_row);
-    intro_path = new plot_type[intro_path_length];
-    upleftcorner.x = rap.x + (ALIEN_SHIFT_X * nomber_in_row);
-    upleftcorner.y = rap.y;
-    make_intro_path();
 
-
-}
 
 void Alien_small::make_intro_path()
 {

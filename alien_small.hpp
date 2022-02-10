@@ -4,7 +4,7 @@
 
 #include "alien_consts.hpp"
 #include "drawable.hpp"
-#include "myrand.hpp"
+//#include "myrand.hpp"
 
 class Alien_small : public Drawable
 {
@@ -20,7 +20,7 @@ class Alien_small : public Drawable
 
     int current_walking_index = 0;
     int intro_path_length = 0;
-    int bezje_path_length = 0;
+    //int bezje_path_length = 0;
     
     void make_intro_path();
 
@@ -29,7 +29,7 @@ class Alien_small : public Drawable
     public:
     Alien_small(SDL_Renderer* r, const string& file_name,const plot_type& rap, int nomber_in_row);
     ~Alien_small();
-    void SetBezjePath(plot_type* bp, const int length);
+    void SetBezjePath(plot_type* bp/*, const int length*/);
     void move_();
     void draw_();
 };

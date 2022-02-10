@@ -1,9 +1,12 @@
+#include "engine.hpp"
 #include "sdl_init.hpp"
 #include "hero.hpp"
 #include "starsky.hpp"
 #include "backgrounds.hpp"
 #include "bullet.hpp"
 #include "object_list.hpp"
+//#include "fleet.hpp"
+#include "fl.hpp"
 
 static mySDL mysdl;
 static SDL_Event e;
@@ -11,6 +14,7 @@ static GAME_HISTORY_NAMES history = GAME_HISTORY_NAMES::FIRST;
 
 //Пора чистить список выстрелов героя
 static bool time_to_cleanup_hbl = false;
+static bool time_to_cleanup_fleet = false;
 
 
 void check_ship_move(SDL_Event& e, Hero& hero, Object_list<Drawable_listNode>& bhl, bool& quit);
@@ -28,9 +32,11 @@ int main(int argc, char* argv[])
     Backgrounds backs(mysdl.gRenderer);
     //Список выстрелов героя
     Object_list<Drawable_listNode> HeroBulletList;
+    Fl fleet(mysdl.gRenderer, "small_alien.png", 3);
     if (!hero.Init_status()) return 1; 
     if (!sky.Init_status()) return 1;
     if (!backs.Init_status()) return 1;
+    
     
 
     bool quit = false;
@@ -74,16 +80,17 @@ int main(int argc, char* argv[])
             HeroBulletList.CleanUP_from_invisible();
             time_to_cleanup_hbl = false;
         }
+        fleet.Draw();
+        fleet.Move(time_to_cleanup_fleet);
+        //fleet.Fleet_draw();
+        //fleet.Fleet_move(time_to_cleanup_fleet);
         SDL_RenderPresent(mysdl.gRenderer);
     }
     close(mysdl);
     return 0;
 }
 
-void draw(Drawable& object)
-{
-    object.draw_();
-}
+
 
 
 //Отрисовка звездного неба в движении
@@ -154,25 +161,5 @@ void check_ship_move(SDL_Event& e, Hero& hero, Object_list<Drawable_listNode>& h
 
 
 
-void draw_node(Drawable_listNode* node)
-{
-    if (!node) return;
-    draw(*node->object);
-    node = node->next;
-    draw_node(node);
-}
 
-
-//Движение выстрелов из списка в рекурсии
-void move_node(Drawable_listNode* node, bool& time_to_cleanup_bhl)
-{
-    if (!node) return;
-    node->object->move_();
-    if (!node->object->Is_visible()) 
-    {
-        time_to_cleanup_bhl = true;
-    }
-    node = node->next;
-    move_node(node, time_to_cleanup_bhl);
-}
 

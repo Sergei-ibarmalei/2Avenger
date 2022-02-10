@@ -4,8 +4,13 @@ project(main)
 #SET(MYCOMPILE_FLAGS "-Wall")
 
 set(SOURCES
+          engine.cpp
+          object_list.cpp
           bez.cpp
-          alien_small.cpp
+          al.cpp 
+          fl.cpp
+          #alien_small.cpp
+          #fleet.cpp
           drawable.cpp 
           hero.cpp 
           Ltexture.cpp 

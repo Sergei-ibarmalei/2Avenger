@@ -2,7 +2,7 @@
 #define OBJECT_LIST_HPP
 
 #include "drawable.hpp"
-
+#include "engine.hpp"
 
 
 
@@ -19,6 +19,8 @@ struct Drawable_listNode
     }
 };
 
+void draw_node(Drawable_listNode* node);
+void move_node(Drawable_listNode* node, bool& time_to_cleanup_bhl);
 
 template <class T>
 class Object_list
@@ -98,6 +100,9 @@ void Object_list<T>::delete_invisibles(T** pcur)
         }
     }
 }
+
+
+
 
 
 
