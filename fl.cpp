@@ -20,6 +20,7 @@ Fl::Fl(SDL_Renderer* r, const string& fn, int count)
     for (int i = 0; i < count; i++)
     {
         Al* alien = new Al {r, fn, apperar_point, i};
+        if (!alien->Init_status()) init_status = false;
         alien->SetCurvePath(curve_way);
         fleet.Push_back(alien);
     }

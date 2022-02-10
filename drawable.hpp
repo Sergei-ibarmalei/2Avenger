@@ -32,6 +32,8 @@ class Drawable
 
 };
 
+void draw(Drawable& object);
+
 
 
 

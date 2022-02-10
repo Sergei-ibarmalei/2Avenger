@@ -14,6 +14,7 @@ class Fl
     plot_type apperar_point;
     plot_type* reper_points = nullptr;
     plot_type* curve_way = nullptr;
+    bool init_status = true;
 
     void make_curve(plot_type* rap, plot_type* way);
     
@@ -24,6 +25,7 @@ class Fl
     ~Fl();
     void Draw();
     void Move(bool& time_to_cleanUP);
+    bool Init_status() const {return init_status;}
 
 };
 
