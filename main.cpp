@@ -2,51 +2,50 @@
 #include "sdl_init.hpp"
 
 static mySDL mysdl;
-static SDL_Event e;
-static GAME_HISTORY_NAMES history = GAME_HISTORY_NAMES::FIRST;
 
-//Пора чистить список выстрелов героя
-static bool time_to_cleanup_hbl = false;
-static bool time_to_cleanup_fleet = false;
-
-
-void check_ship_move(SDL_Event& e, Hero* hero, Object_list<Drawable_listNode>& bhl, bool& quit);
-void draw_node(Drawable_listNode* node);
-void move_node(Drawable_listNode* node, bool& time_to_cleanup_bhl);
+void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_item_type& item);
 
 int main(int argc, char* argv[])
 {
+    hero_type hero;
+    game_fon_type game_fon; 
+    bullet_type bulletList;
+    fleet_type fleet;
+    game_item_type game_item;
+
+
     if(!init(mysdl, "2Avenger")) return 1;
-    Hero* hero = init_hero(mysdl, "ships_2.png");
-    Starsky* sky = init_sky(mysdl, "one_star.png");
-    Backgrounds* backs = init_backs(mysdl);
-    //Список выстрелов героя
-    Object_list<Drawable_listNode>* HeroBulletList = init_hero_bullet_list();
-    Fl* fleet = init_fleet(mysdl, "small_alien.png", 3);
+    init_hero_type(hero, mysdl, "ships_2.png");
+    init_game_fon_type(game_fon, mysdl, "one_star.png");
+    init_bullet_list(mysdl, bulletList);
+    init_fleet_type(fleet, mysdl, "small_alien.png");
+    init_game_item_type(game_item);
+
     if (!mysdl.all_init_ok) return 1;
-    
-    
 
-    bool quit = false;
-
-    while(!quit)
+    while (!game_item.game_quit)
     {
-        while (SDL_PollEvent(&e) != 0)
+        while(hero.hero->Is_walking_intro())
         {
-            if (e.type == SDL_QUIT) quit = true;
-            else if (e.type == SDL_KEYDOWN)
+            Hero_walking_intro(mysdl, hero, game_fon, game_item);
+        } 
+        while (SDL_PollEvent(&mysdl.e))
+        {
+            if (mysdl.e.type == SDL_QUIT) game_item.game_quit = true;
+
+            else if (mysdl.e.type == SDL_KEYDOWN)
             {
-                check_ship_move(mysdl, e, hero, HeroBulletList, quit);
+                check_ship_move(mysdl, hero, bulletList, game_item);
             }
-            else if (e.type == SDL_KEYUP)
+            else if (mysdl.e.type == SDL_KEYUP)
             {
-                switch (e.key.keysym.sym)
+                switch (mysdl.e.key.keysym.sym)
                 {
                     case SDLK_UP:
                     case SDLK_DOWN:
                     {
-                        hero->Position() = hero_position::CENTER;
-                        hero->Bullet_start_position();
+                        hero.hero->Position() = hero_position::CENTER;
+                        hero.hero->Bullet_start_position();
                         break;
                     }
                     default: {}
@@ -57,28 +56,38 @@ int main(int argc, char* argv[])
 
         SDL_SetRenderDrawColor(mysdl.gRenderer, 0x0, 0x0, 0x0, 0xFF);
         SDL_RenderClear(mysdl.gRenderer);
-        draw_backs(backs, history);
-        draw_sky(sky);
-        sky->move();
-        draw(*hero);
-        draw_node(HeroBulletList->First());
-        move_node(HeroBulletList->First(), time_to_cleanup_hbl);
-        if (time_to_cleanup_hbl)
+        draw_fon(game_fon, game_item);
+        draw(*hero.hero);
+        draw_node(bulletList.HeroBulletList->First()); 
+        move_node(bulletList.HeroBulletList->First(), bulletList.time_to_cleanup_bhl); 
+        if (bulletList.time_to_cleanup_bhl)
         {
-            HeroBulletList->CleanUP_from_invisible();
-            time_to_cleanup_hbl = false;
+            bulletList.HeroBulletList->CleanUP_from_invisible();
+            bulletList.time_to_cleanup_bhl = false;
         }
-        fleet->Draw();
-        fleet->Move(time_to_cleanup_fleet);
+        fleet.three_alien_fighter->Draw(); 
+        fleet.three_alien_fighter->Move(fleet.time_to_cleanup_fleet);
         SDL_RenderPresent(mysdl.gRenderer);
     }
-    close_hero_sky_backs(hero, sky, backs);
+    close_fon(game_fon);
+    close_hero(hero);
     close_fleet(fleet);
-    close_bullet_list(HeroBulletList);
+    close_bullet_list(bulletList);
     
 
     close(mysdl);
     return 0;
+}
+
+void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_item_type& item)
+{
+        SDL_SetRenderDrawColor(mysdl.gRenderer, 0x0, 0x0, 0x0, 0xFF);
+        SDL_RenderClear(mysdl.gRenderer);
+        draw_fon(fon, item);
+        fon.sky->move();
+        hero.hero->move_();
+        draw(*hero.hero);
+        SDL_RenderPresent(mysdl.gRenderer);
 }
 
 

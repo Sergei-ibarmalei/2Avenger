@@ -15,6 +15,8 @@ const int UPSHIP {0};
 const int CENTERSHIP {1};
 const int DOWNSHIP {2};
 
+const int HERO_INTRO_PATH {300};
+
 typedef struct 
 {
     int x;
@@ -43,11 +45,10 @@ enum class Bullet_direction {LEFT, RIGHT, COMPLEX, NONE};
 const int BULLET_SPEED {5};
 const int BULLET_START_X_SHIFT {3};
 //HERO BULLET
-//enum class Hero_bullet_kind {BLUE_BULLET, RED_BULLET, GREEN_BULLET};
 
 
 //GAME_HISTORY_COUNT
  const int GAME_HISTORY {3};
- enum class GAME_HISTORY_NAMES {FIRST, SECOND, THIRD, ALL};
+ enum class GAME_HISTORY_PART {FIRST, SECOND, THIRD, ALL};
 
 #endif

@@ -9,9 +9,7 @@
 class Al : public Drawable
 {
     protected:
-    plot_type* stright_way = nullptr;
     plot_type* curve_way = nullptr;
-    int length_stright_way;
     int count_in_raw;
     int current_walking_step = 0;
     plot_type start_stright_way;

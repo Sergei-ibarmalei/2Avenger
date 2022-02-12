@@ -8,6 +8,7 @@ typedef struct
     SDL_Window* gWindow = nullptr;
     SDL_Renderer* gRenderer = nullptr;
     bool all_init_ok = true;
+    SDL_Event e;
 }mySDL;
 
 #endif

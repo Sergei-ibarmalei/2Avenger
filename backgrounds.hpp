@@ -8,13 +8,13 @@
 class Backgrounds
 {
     private:
-    Back_fon* all_back_fons[static_cast<int>(GAME_HISTORY_NAMES::ALL)];
+    Back_fon* all_back_fons = nullptr;
     bool init = true;
     
     public:
     Backgrounds(SDL_Renderer* r);
     ~Backgrounds();
-    Back_fon* All_back_fons() {return all_back_fons[0];}
+    Back_fon* All_back_fons() {return &all_back_fons[0];}
     bool Init_status() const {return init;}
 
 

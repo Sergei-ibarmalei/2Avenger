@@ -11,15 +11,16 @@ Hero::Hero(SDL_Renderer* r, const string& file_name) : Drawable(r, file_name)
 
     loadMedia();
     position = hero_position::CENTER;
-    upleftcorner = {S_W/2 - lt->get_mTexture_w()/2, S_H/2 - sprite_height[CENTERSHIP]/2};
-    Set_bullet_start_pos();
+    //Установка начальной позиции
+    upleftcorner = {0 - lt->get_mTexture_w(), S_H/2 - sprite_height[CENTERSHIP]/2};
+    set_bullet_start_pos();
+    stright_way = making_stright(upleftcorner, HERO_INTRO_PATH, Move_direction::RIGHT);
 }
 
 //Установка стартовой позиции пули
-void Hero::Set_bullet_start_pos()
+void Hero::set_bullet_start_pos()
 {
     bullet_start_pos.x = upleftcorner.x + sprite_width + BULLET_START_X_SHIFT;
-    //bullet_start_pos.y = upleftcorner.y + 2 + gSprites[static_cast<int>(position)].h / 2;
     bullet_start_pos.y = upleftcorner.y + gSprites[1].h / 2;
 }
 
@@ -27,11 +28,12 @@ Hero::~Hero()
 {
     delete lt;
     lt = nullptr;
+    delete[] stright_way;
+    stright_way = nullptr;
 }
 
 void Hero::draw_()
 {
-    //std::cout << "here\n";
     switch(position)
     {
         case hero_position::UP:
@@ -56,6 +58,11 @@ void Hero::draw_()
 
 void Hero::move_()
 {
+    if (walking_intro)
+    {
+        Walking_intro(upleftcorner, stright_way,current_walking_step,HERO_INTRO_PATH, walking_intro);
+        return;
+    } 
     switch (direction)
     {
         case Move_direction::UP:
@@ -86,7 +93,7 @@ void Hero::move_()
         default: {}
     }
 
-    Set_bullet_start_pos();
+    set_bullet_start_pos();
 }
 
 
@@ -141,3 +148,5 @@ bool Hero::is_out_of_border()
     }
     return false;
 }
+
+    

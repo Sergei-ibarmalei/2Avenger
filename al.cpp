@@ -15,6 +15,8 @@ void Al::SetCurvePath(plot_type* curve)
 
 Al::~Al()
 {
+    delete lt;
+    lt = nullptr;
     delete[] stright_way;
     stright_way = nullptr;
 }
@@ -26,17 +28,7 @@ void Al::make_stright_way()
     upleftcorner.y = appear_point.y;
     length_stright_way = intro_;
 
-    stright_way = new plot_type[length_stright_way];
-    stright_way[0] = upleftcorner;
-    int count = 1;
-    auto ptr = &stright_way[1];
-    for (;;ptr++, count++)
-    {
-        if (ptr == &stright_way[length_stright_way]) break;
-        ptr->x = stright_way[0].x - count;
-        ptr->y = stright_way[0].y;
-    }
-
+    stright_way = making_stright(upleftcorner, length_stright_way, Move_direction::LEFT);
     start_curve_way = stright_way[length_stright_way - 1 ];
 }
 
@@ -44,12 +36,8 @@ void Al::move_()
 {
     if (walking_intro)
     {
-        upleftcorner = stright_way[current_walking_step++];
-        if (current_walking_step == length_stright_way)
-        {
-            walking_intro = false;
-            current_walking_step = 0;
-        }
+        
+        Walking_intro(upleftcorner, stright_way, current_walking_step, length_stright_way, walking_intro);
         return;
     }
     upleftcorner = curve_way[current_walking_step++];
