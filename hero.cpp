@@ -61,6 +61,7 @@ void Hero::move_()
     if (walking_intro)
     {
         Walking_intro(upleftcorner, stright_way,current_walking_step,HERO_INTRO_PATH, walking_intro);
+        set_bullet_start_pos();
         return;
     } 
     switch (direction)

@@ -59,18 +59,14 @@ int main(int argc, char* argv[])
             Hero_walking_intro(mysdl, hero, game_fon, game_item);
             continue;
         }
+        main_draw(hero, game_fon, bulletList, game_item, fleet);
 
-        draw_fon(game_fon, game_item);
-
-        draw(*hero.hero);
-        draw_node(bulletList.HeroBulletList->First()); 
         move_node(bulletList.HeroBulletList->First(), bulletList.time_to_cleanup_bhl); 
         if (bulletList.time_to_cleanup_bhl)
         {
             bulletList.HeroBulletList->CleanUP_from_invisible();
             bulletList.time_to_cleanup_bhl = false;
         }
-        fleet.three_alien_fighter->Draw(); 
         fleet.three_alien_fighter->Move(fleet.time_to_cleanup_fleet);
         SDL_RenderPresent(mysdl.gRenderer);
     }
@@ -83,6 +79,8 @@ int main(int argc, char* argv[])
     close(mysdl);
     return 0;
 }
+
+
 
 
 

@@ -39,4 +39,6 @@ void check_ship_move(mySDL& mysdl, hero_type& hero, bullet_type& bullet_list, ga
 
 void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_item_type& item);
 
+void main_draw(hero_type& hero, game_fon_type& fon, bullet_type& bullets, game_item_type& item, fleet_type& fleet);
+
 #endif

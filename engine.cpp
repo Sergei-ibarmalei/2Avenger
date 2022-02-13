@@ -11,6 +11,7 @@ Fl* init_fleet(mySDL& mysdl, const string& file_name, int count);
 //Проверка нажатия клавиш для движения героя
 void check_ship_move(mySDL& mysdl, hero_type& hero, bullet_type& bullet_list, game_item_type& game)
 {
+    if (hero.hero->Is_walking_intro()) return;
     switch (mysdl.e.key.keysym.sym)
     {
         case SDLK_UP:
@@ -204,3 +205,13 @@ void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_
         draw(*hero.hero);
         SDL_RenderPresent(mysdl.gRenderer);
 }
+
+void main_draw(hero_type& hero, game_fon_type& fon, bullet_type& bullets, game_item_type& item, fleet_type& fleet)
+{
+    draw_fon(fon, item);
+    draw(*hero.hero);
+    draw_node(bullets.HeroBulletList->First());
+    fleet.three_alien_fighter->Draw();
+}
+
+
