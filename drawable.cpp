@@ -14,6 +14,7 @@ Drawable::~Drawable()
 {
 }
 
+//Отрисовка объекта Drawable
 void draw(Drawable& object)
 {
     object.draw_();

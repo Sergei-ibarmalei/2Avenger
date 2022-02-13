@@ -3,7 +3,7 @@
 
 static mySDL mysdl;
 
-void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_item_type& item);
+//void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_item_type& item);
 
 int main(int argc, char* argv[])
 {
@@ -25,10 +25,7 @@ int main(int argc, char* argv[])
 
     while (!game_item.game_quit)
     {
-        while(hero.hero->Is_walking_intro())
-        {
-            Hero_walking_intro(mysdl, hero, game_fon, game_item);
-        } 
+
         while (SDL_PollEvent(&mysdl.e))
         {
             if (mysdl.e.type == SDL_QUIT) game_item.game_quit = true;
@@ -54,9 +51,17 @@ int main(int argc, char* argv[])
 
         }
 
+
         SDL_SetRenderDrawColor(mysdl.gRenderer, 0x0, 0x0, 0x0, 0xFF);
         SDL_RenderClear(mysdl.gRenderer);
+        if (hero.hero->Is_walking_intro()) 
+        {
+            Hero_walking_intro(mysdl, hero, game_fon, game_item);
+            continue;
+        }
+
         draw_fon(game_fon, game_item);
+
         draw(*hero.hero);
         draw_node(bulletList.HeroBulletList->First()); 
         move_node(bulletList.HeroBulletList->First(), bulletList.time_to_cleanup_bhl); 
@@ -78,19 +83,6 @@ int main(int argc, char* argv[])
     close(mysdl);
     return 0;
 }
-
-void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_item_type& item)
-{
-        SDL_SetRenderDrawColor(mysdl.gRenderer, 0x0, 0x0, 0x0, 0xFF);
-        SDL_RenderClear(mysdl.gRenderer);
-        draw_fon(fon, item);
-        fon.sky->move();
-        hero.hero->move_();
-        draw(*hero.hero);
-        SDL_RenderPresent(mysdl.gRenderer);
-}
-
-
 
 
 

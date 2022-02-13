@@ -69,7 +69,6 @@ Hero* init_hero(mySDL& mysdl, const string& file_name)
         delete hero;
         hero = nullptr;
         mysdl.all_init_ok = false;
-        return hero;
     }
     return hero;
 }
@@ -144,18 +143,18 @@ void init_game_item_type(game_item_type& status)
     status.game_part = GAME_HISTORY_PART::FIRST;
 }
 
-
+//Отрисовка заднего фона, звезд, движение звезд
 void draw_fon(game_fon_type& fon, const game_item_type& game)
 {
-    auto ptr = &fon.backs->All_back_fons()[static_cast<int>(game.game_part)];
-    auto ptr_slow = &fon.sky->Slow_stars()[0];
-    auto ptr_fast = &fon.sky->Fast_stars()[0];
-    draw(*ptr);
-    for (;;ptr_slow++, ptr_fast++)
+    auto ptr_back_image = &fon.backs->All_back_fons()[static_cast<int>(game.game_part)];
+    auto ptr_slow_star = &fon.sky->Slow_stars()[0];
+    auto ptr_fast_star = &fon.sky->Fast_stars()[0];
+    draw(*ptr_back_image);
+    for (;;ptr_slow_star++, ptr_fast_star++)
     {
-        if (ptr_slow == &fon.sky->Slow_stars()[SLOW_STAR]) break;
-        draw(*ptr_slow);
-        draw(*ptr_fast);
+        if (ptr_slow_star == &fon.sky->Slow_stars()[SLOW_STAR]) break;
+        draw(*ptr_slow_star);
+        draw(*ptr_fast_star);
     }
     fon.sky->move();
     
@@ -192,4 +191,16 @@ void close_fon(game_fon_type& fon)
     fon.sky = nullptr;
     delete fon.backs;
     fon.backs = nullptr;
+}
+
+
+void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_item_type& item)
+{
+        SDL_SetRenderDrawColor(mysdl.gRenderer, 0x0, 0x0, 0x0, 0xFF);
+        SDL_RenderClear(mysdl.gRenderer);
+        draw_fon(fon, item);
+        fon.sky->move();
+        hero.hero->move_();
+        draw(*hero.hero);
+        SDL_RenderPresent(mysdl.gRenderer);
 }

@@ -12,6 +12,7 @@
 typedef struct
 {
     Hero* hero = nullptr;
+    //bool Is_walking_intro = true;
 
 }hero_type;
 
