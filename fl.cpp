@@ -11,9 +11,9 @@ Fl::~Fl()
 Fl::Fl(SDL_Renderer* r, const string& fn, int count)
 {
     count_of_fleet = count;
-    apperar_point.x = S_W - 60;
+    apperar_point.x = S_W + 60;
     apperar_point.y = S_H / 2;
-    plot_type start_curv {apperar_point.x - 100, apperar_point.y};
+    plot_type start_curv {apperar_point.x - ALIEN_INTRO_PATH, apperar_point.y};
     curve_way = new plot_type[ALIEN_BEZJE_PATH];
     reper_points = set_reper_points(start_curv);
     make_path_bezje(curve_way, reper_points);
