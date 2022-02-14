@@ -34,6 +34,12 @@ bool init(mySDL& sdl, const char* title)
         std::cout << "Невозможно инициализировать SDL_image, ошибка " << IMG_GetError() << '\n';
         return false;
     }
+
+    if( TTF_Init() == -1)
+    {
+        std::cout << "Невозможно инициализировать SDL_ttf, ошибка." << TTF_GetError() << '\n';
+        return false;
+    }
     return true;
 
 

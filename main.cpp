@@ -3,7 +3,6 @@
 
 static mySDL mysdl;
 
-//void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_item_type& item);
 
 int main(int argc, char* argv[])
 {
