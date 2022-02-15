@@ -11,6 +11,7 @@ int main(int argc, char* argv[])
     bullet_type bulletList;
     fleet_type fleet;
     game_item_type game_item;
+    text_type game_text;
 
 
     if(!init(mysdl, "2Avenger")) return 1;
@@ -19,6 +20,7 @@ int main(int argc, char* argv[])
     init_bullet_list(mysdl, bulletList);
     init_fleet_type(fleet, mysdl, "small_alien.png");
     init_game_item_type(game_item);
+    init_text_type(mysdl,  game_text);
 
     if (!mysdl.all_init_ok) return 1;
 

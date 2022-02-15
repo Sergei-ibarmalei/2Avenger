@@ -44,6 +44,11 @@ typedef struct
 
 }game_item_type;
 
+typedef struct
+{
+    Ltexture* pause = nullptr;
+}text_type;
+
 
 
 #endif

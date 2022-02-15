@@ -10,7 +10,7 @@ Ltexture::Ltexture(SDL_Renderer* renderer_, const string& name): renderer(render
 }
 
 
-Ltexture::Ltexture(SDL_Renderer* renderer_, const string& text, int textSize, SDL_Color& textcolor):renderer(renderer_)
+Ltexture::Ltexture(SDL_Renderer* renderer_, const string& text, int textSize, const SDL_Color& textcolor):renderer(renderer_)
 //Конструктор для текста
 {
     kind = Kind_of_texture::TEXT;
@@ -18,7 +18,9 @@ Ltexture::Ltexture(SDL_Renderer* renderer_, const string& text, int textSize, SD
     mTexture_w = mTexture_h = 0;
     color = textcolor;
     loadMediaText(textSize);
-    loadFromFile(text);
+    if (gFont)
+        loadFromFile(text);
+    
 
 }
 
@@ -35,15 +37,16 @@ void Ltexture::free()
         mTexture = nullptr;
         mTexture_w = mTexture_h = 0;
     }
-    if (gFont)
+    /* if (gFont)
     {
         TTF_CloseFont(gFont);
         gFont = nullptr;
-    }
+    } */
 }
 
 void Ltexture::loadMediaText(int textSize)
 {
+    
     if ( (textSize < 10) || (textSize > 48))
     {
         std::cout << "\nTextsize error, abort.\n";
@@ -107,9 +110,9 @@ void Ltexture::loadFromFile(const string& string)
             else
             {
                 newTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-                if (!mTexture)
+                if (!newTexture)
                 {
-                    std::cout << "Unable to create texture form text, error: " << SDL_GetError() << '\n';
+                    std::cout << "Unable to create texture from text, error: " << SDL_GetError() << '\n';
                     Ltexture_init = false;
                     return;
                 }

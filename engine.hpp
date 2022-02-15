@@ -41,4 +41,9 @@ void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_
 
 void main_draw(hero_type& hero, game_fon_type& fon, bullet_type& bullets, game_item_type& item, fleet_type& fleet);
 
+
+void init_text_type(mySDL& mysdl, text_type& game_text);
+
+void show_pause(const text_type& text);
+
 #endif

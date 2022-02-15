@@ -215,3 +215,22 @@ void main_draw(hero_type& hero, game_fon_type& fon, bullet_type& bullets, game_i
 }
 
 
+void init_text_type(mySDL& mysdl, text_type& game_text)
+{
+    SDL_Color pause_color = {0xFF, 0x0, 0x0, 0xFF};
+    
+    game_text.pause = new Ltexture {mysdl.gRenderer, "PAUSE", 44, pause_color};
+    if (!game_text.pause->get_Ltexture_status())
+    {
+        mysdl.all_init_ok = false;
+        return;
+    }
+    //game_text.pause->TextColor() = pause_color;
+    
+}
+
+void show_pause(const text_type& text)
+{
+    text.pause->render( (S_W - text.pause->get_mTexture_w())/2, (S_H - text.pause->get_mTexture_h())/2);
+    //SDL_RenderPresent(mysdl.gRenderer);
+}
