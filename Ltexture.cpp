@@ -3,17 +3,22 @@
 Ltexture::Ltexture(SDL_Renderer* renderer_, const string& name): renderer(renderer_)
 //Конструктор для графики
 {
+    kind = Kind_of_texture::IMAGE;
     mTexture = nullptr;
     mTexture_w = mTexture_h = 0;
     loadFromFile(name);
 }
 
 
-Ltexture::Ltexture(SDL_Renderer* renderer_, const string& text, SDL_Color& textcolor):renderer(renderer_)
+Ltexture::Ltexture(SDL_Renderer* renderer_, const string& text, int textSize, SDL_Color& textcolor):renderer(renderer_)
 //Конструктор для текста
 {
+    kind = Kind_of_texture::TEXT;
     mTexture = nullptr;
     mTexture_w = mTexture_h = 0;
+    color = textcolor;
+    loadMediaText(textSize);
+    loadFromFile(text);
 
 }
 
@@ -37,38 +42,93 @@ void Ltexture::free()
     }
 }
 
-void Ltexture::loadFromFile(const string& name)
+void Ltexture::loadMediaText(int textSize)
 {
-    free();
-    SDL_Texture* newTexture = nullptr;
-    SDL_Surface* loadedSurface = IMG_Load(name.c_str());
-    if(!loadedSurface)
+    if ( (textSize < 10) || (textSize > 48))
     {
-        std::cout << "Unable to load image " << name << " SDL_image error: " <<
-            IMG_GetError() << '\n';
+        std::cout << "\nTextsize error, abort.\n";
         Ltexture_init = false;
         return;
     }
-    else
+    gFont = TTF_OpenFont("sfns-display-bold.ttf", textSize);
+    if (gFont == nullptr)
     {
-        SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0xFF, 0xFF, 0xFF));
-        newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-        if(!newTexture)
+        std::cout << "Failed to load font, SDL_ttf error: " << TTF_GetError() << '\n';
+        Ltexture_init = false;
+    }
+}
+
+void Ltexture::loadFromFile(const string& string)
+{
+    free();
+    SDL_Texture* newTexture = nullptr;
+
+    switch (kind)
+    {
+        case Kind_of_texture::IMAGE:
         {
-            std::cout << "Unable to create texture from " << name << " SDL Error: " <<
-                SDL_GetError() << '\n';
-            Ltexture_init = false;
-            return;
+            SDL_Surface* loadedSurface = IMG_Load(string.c_str());
+            if(!loadedSurface)
+            {
+                std::cout << "Unable to load image " << string << " SDL_image error: " <<
+                    IMG_GetError() << '\n';
+                Ltexture_init = false;
+                return;
+            }
+            else
+            {
+                SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0xFF, 0xFF, 0xFF));
+                newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+                if(!newTexture)
+                {
+                    std::cout << "Unable to create texture from " << string << " SDL Error: " <<
+                        SDL_GetError() << '\n';
+                    Ltexture_init = false;
+                    return;
+                }
+                else
+                {
+                    mTexture_w = loadedSurface->w;
+                    mTexture_h = loadedSurface->h;
+                }
+                SDL_FreeSurface(loadedSurface);
+            }
+            break;
         }
-        else
+        case Kind_of_texture::TEXT:
         {
-            mTexture_w = loadedSurface->w;
-            mTexture_h = loadedSurface->h;
+            SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, string.c_str(), color);
+            if (!textSurface)
+            {
+                std::cout << "Unable to render text surface, SDL_ttf error: " << TTF_GetError() << '\n';
+                Ltexture_init = false;
+                return;
+            }
+            else
+            {
+                newTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+                if (!mTexture)
+                {
+                    std::cout << "Unable to create texture form text, error: " << SDL_GetError() << '\n';
+                    Ltexture_init = false;
+                    return;
+                }
+                else
+                {
+                    mTexture_w = textSurface->w;
+                    mTexture_h= textSurface->h;
+                }
+                SDL_FreeSurface(textSurface);
+            }
+            break;
         }
-        SDL_FreeSurface(loadedSurface);
+        default: {}
+
     }
     mTexture = newTexture;
 }
+
+
 
 void Ltexture::render(int x, int y, SDL_Rect* clip)
 {
