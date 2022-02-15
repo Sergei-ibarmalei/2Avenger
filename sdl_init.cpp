@@ -51,6 +51,7 @@ void close(mySDL& sdl)
     SDL_DestroyWindow(sdl.gWindow);
     sdl.gRenderer= nullptr;
     sdl.gWindow= nullptr;
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
 }

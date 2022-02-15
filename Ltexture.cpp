@@ -1,10 +1,20 @@
 #include "Ltexture.hpp"
 
 Ltexture::Ltexture(SDL_Renderer* renderer_, const string& name): renderer(renderer_)
+//Конструктор для графики
 {
     mTexture = nullptr;
     mTexture_w = mTexture_h = 0;
     loadFromFile(name);
+}
+
+
+Ltexture::Ltexture(SDL_Renderer* renderer_, const string& text, SDL_Color& textcolor):renderer(renderer_)
+//Конструктор для текста
+{
+    mTexture = nullptr;
+    mTexture_w = mTexture_h = 0;
+
 }
 
 Ltexture::~Ltexture()
@@ -19,6 +29,11 @@ void Ltexture::free()
         SDL_DestroyTexture(mTexture);
         mTexture = nullptr;
         mTexture_w = mTexture_h = 0;
+    }
+    if (gFont)
+    {
+        TTF_CloseFont(gFont);
+        gFont = nullptr;
     }
 }
 
