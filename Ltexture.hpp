@@ -11,8 +11,11 @@ using std::string;
 
 enum class Kind_of_texture {IMAGE, TEXT, NONE};
 
+//Класс текстуры
 class Ltexture
 {
+    protected:
+
     Kind_of_texture kind = Kind_of_texture::NONE;
     bool Ltexture_init = true;
     SDL_Texture* mTexture;
@@ -33,7 +36,7 @@ class Ltexture
     //Конструктор для текста
     Ltexture(SDL_Renderer* renderer_, const string& text, int textSize, const SDL_Color& textColor);
     ~Ltexture();
-    SDL_Texture* get_texture() const {return mTexture;}
+    //SDL_Texture* get_texture() const {return mTexture;}
     int get_mTexture_w() const {return mTexture_w;}
     int get_mTexture_h() const {return mTexture_h;}
     bool get_Ltexture_status() const {return Ltexture_init;}
@@ -42,5 +45,21 @@ class Ltexture
     
     
 };
+
+
+//Класс для отрисовки текстуры жизней в деке
+class DeckTexture: public Ltexture
+{
+    private:
+    bool is_visible = true;
+
+    public:
+    DeckTexture(SDL_Renderer* renderer_, const string& file_name);
+    ~DeckTexture();
+    bool& Is_visible() {return is_visible;}
+
+};
+
+
 
 #endif

@@ -35,6 +35,8 @@ void close_fleet(fleet_type& fleet);
 
 void close_bullet_list(bullet_type& bullet_list);
 
+void close_game_text(text_type& game_text);
+
 void check_ship_move(mySDL& mysdl, hero_type& hero, bullet_type& bullet_list, game_item_type& game);
 
 void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_item_type& item);

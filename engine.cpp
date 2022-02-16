@@ -205,6 +205,12 @@ void close_fon(game_fon_type& fon)
     fon.backs = nullptr;
 }
 
+void close_game_text(text_type& game_text)
+{
+    delete game_text.pause;
+    game_text.pause = nullptr;
+}
+
 
 void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_item_type& item)
 {

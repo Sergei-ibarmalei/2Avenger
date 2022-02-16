@@ -143,3 +143,14 @@ void Ltexture::render(int x, int y, SDL_Rect* clip)
     }
     SDL_RenderCopy(renderer, mTexture, clip, &renderQuad);
 }
+
+
+DeckTexture::DeckTexture(SDL_Renderer* renderer_, const string& file_name) : Ltexture(renderer_, file_name)
+{
+
+}
+
+DeckTexture::~DeckTexture()
+{
+    free();
+}

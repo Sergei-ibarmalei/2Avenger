@@ -82,6 +82,7 @@ int main(int argc, char* argv[])
     close_hero(hero);
     close_fleet(fleet);
     close_bullet_list(bulletList);
+    close_game_text(game_text);
     
 
     close(mysdl);
