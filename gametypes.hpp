@@ -40,7 +40,8 @@ typedef struct
 typedef struct 
 {
     GAME_HISTORY_PART game_part;
-    bool game_quit = false;
+    bool game_quit   = false;
+    bool game_paused = false;
 
 }game_item_type;
 

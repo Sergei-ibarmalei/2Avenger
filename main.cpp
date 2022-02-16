@@ -57,10 +57,16 @@ int main(int argc, char* argv[])
         SDL_RenderClear(mysdl.gRenderer);
         if (hero.hero->Is_walking_intro()) 
         {
+
             Hero_walking_intro(mysdl, hero, game_fon, game_item);
             continue;
         }
         main_draw(hero, game_fon, bulletList, game_item, fleet);
+        if (game_item.game_paused)
+        {
+            show_pause(mysdl, game_text);
+            continue;
+        }
 
         move_node(bulletList.HeroBulletList->First(), bulletList.time_to_cleanup_bhl); 
         if (bulletList.time_to_cleanup_bhl)
@@ -69,6 +75,7 @@ int main(int argc, char* argv[])
             bulletList.time_to_cleanup_bhl = false;
         }
         fleet.three_alien_fighter->Move(fleet.time_to_cleanup_fleet);
+        //show_pause(game_text);
         SDL_RenderPresent(mysdl.gRenderer);
     }
     close_fon(game_fon);

@@ -47,7 +47,7 @@ void Ltexture::free()
 void Ltexture::loadMediaText(int textSize)
 {
     
-    if ( (textSize < 10) || (textSize > 48))
+    if ( (textSize < 10) || (textSize > 100))
     {
         std::cout << "\nTextsize error, abort.\n";
         Ltexture_init = false;

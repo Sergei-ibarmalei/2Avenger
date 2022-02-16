@@ -44,6 +44,6 @@ void main_draw(hero_type& hero, game_fon_type& fon, bullet_type& bullets, game_i
 
 void init_text_type(mySDL& mysdl, text_type& game_text);
 
-void show_pause(const text_type& text);
+void show_pause(const mySDL& mysdl, const text_type& text);
 
 #endif

@@ -14,8 +14,15 @@ void check_ship_move(mySDL& mysdl, hero_type& hero, bullet_type& bullet_list, ga
     if (hero.hero->Is_walking_intro()) return;
     switch (mysdl.e.key.keysym.sym)
     {
+        case SDLK_ESCAPE:
+        {
+            if (!game.game_paused) game.game_paused = true;
+            else game.game_paused = false;
+            break;
+        }
         case SDLK_UP:
         {
+            if (game.game_paused) return;
             hero.hero->Position() = hero_position::UP;
             hero.hero->Direction() = Move_direction::UP;
             hero.hero->move_();
@@ -23,6 +30,7 @@ void check_ship_move(mySDL& mysdl, hero_type& hero, bullet_type& bullet_list, ga
         }
         case SDLK_DOWN:
         {
+            if (game.game_paused) return;
             hero.hero->Position() = hero_position::DOWN;
             hero.hero->Direction() = Move_direction::DOWN;
             hero.hero->move_();
@@ -30,6 +38,7 @@ void check_ship_move(mySDL& mysdl, hero_type& hero, bullet_type& bullet_list, ga
         }
         case SDLK_LEFT:
         {
+            if (game.game_paused) return;
             hero.hero->Position() = hero_position::CENTER;
             hero.hero->Direction() = Move_direction::LEFT;
             hero.hero->move_();
@@ -37,6 +46,7 @@ void check_ship_move(mySDL& mysdl, hero_type& hero, bullet_type& bullet_list, ga
         }
         case SDLK_RIGHT:
         {
+            if (game.game_paused) return;
             hero.hero->Position() = hero_position::CENTER;
             hero.hero->Direction() = Move_direction::RIGHT;
             hero.hero->move_();
@@ -44,6 +54,7 @@ void check_ship_move(mySDL& mysdl, hero_type& hero, bullet_type& bullet_list, ga
         }
         case SDLK_SPACE:
         {
+            if (game.game_paused) return;
             Bullet* b = new Bullet(mysdl.gRenderer, "blue_bullet_1.png", hero.hero->Bullet_start_position(), Bullet_direction::RIGHT);
             if (!b->Init_status())  game.game_quit = true;
             bullet_list.HeroBulletList->Push_back(b);
@@ -219,7 +230,7 @@ void init_text_type(mySDL& mysdl, text_type& game_text)
 {
     SDL_Color pause_color = {0xFF, 0x0, 0x0, 0xFF};
     
-    game_text.pause = new Ltexture {mysdl.gRenderer, "PAUSE", 44, pause_color};
+    game_text.pause = new Ltexture {mysdl.gRenderer, "PAUSE", 78, pause_color};
     if (!game_text.pause->get_Ltexture_status())
     {
         mysdl.all_init_ok = false;
@@ -229,8 +240,8 @@ void init_text_type(mySDL& mysdl, text_type& game_text)
     
 }
 
-void show_pause(const text_type& text)
+void show_pause(const mySDL& mysdl, const text_type& text)
 {
     text.pause->render( (S_W - text.pause->get_mTexture_w())/2, (S_H - text.pause->get_mTexture_h())/2);
-    //SDL_RenderPresent(mysdl.gRenderer);
+    SDL_RenderPresent(mysdl.gRenderer);
 }
