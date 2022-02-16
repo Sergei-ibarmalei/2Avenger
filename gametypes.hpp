@@ -50,6 +50,12 @@ typedef struct
     Ltexture* pause = nullptr;
 }text_type;
 
+typedef struct 
+{
+
+}deck_type;
+
+
 
 
 #endif

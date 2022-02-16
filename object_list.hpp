@@ -4,7 +4,7 @@
 #include "drawable.hpp"
 
 
-
+//Узел для текстуры основной игры
 struct Drawable_listNode
 {
     Drawable* object;
@@ -17,6 +17,20 @@ struct Drawable_listNode
         object = nullptr;
     }
 };
+
+struct DeckTexture_listNode
+{
+    DeckTexture* object;
+    DeckTexture_listNode* next = nullptr;
+
+    DeckTexture_listNode(DeckTexture* pd): object(pd) {}
+    ~DeckTexture_listNode()
+    {
+        delete object;
+        object = nullptr;
+    }
+};
+
 
 void draw_node(Drawable_listNode* node);
 void move_node(Drawable_listNode* node, bool& time_to_cleanup_bhl);
