@@ -52,6 +52,8 @@ typedef struct
 
 typedef struct 
 {
+    Object_list<DeckTexture_listNode>* DeckHeroes = nullptr;
+    Ltexture* DeckTitle = nullptr;
 
 }deck_type;
 

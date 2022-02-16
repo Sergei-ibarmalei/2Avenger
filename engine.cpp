@@ -5,6 +5,7 @@ Backgrounds* init_backs(mySDL& mysdl);
 Starsky* init_sky(mySDL& mysdl, const string& file_name);
 Object_list<Drawable_listNode>* init_hero_bullet_list();
 Fl* init_fleet(mySDL& mysdl, const string& file_name, int count);
+Ltexture* init_text(mySDL& mysdl, const string& text, const int size, const SDL_Color& col);
 
 
 
@@ -236,12 +237,13 @@ void init_text_type(mySDL& mysdl, text_type& game_text)
 {
     SDL_Color pause_color = {0xFF, 0x0, 0x0, 0xFF};
     
-    game_text.pause = new Ltexture {mysdl.gRenderer, "PAUSE", 78, pause_color};
+/*     game_text.pause = new Ltexture {mysdl.gRenderer, "PAUSE", 78, pause_color};
     if (!game_text.pause->get_Ltexture_status())
     {
         mysdl.all_init_ok = false;
         return;
-    }
+    } */
+    game_text.pause = init_text(mysdl, "PAUSE", 78, pause_color);
     //game_text.pause->TextColor() = pause_color;
     
 }
@@ -250,4 +252,16 @@ void show_pause(const mySDL& mysdl, const text_type& text)
 {
     text.pause->render( (S_W - text.pause->get_mTexture_w())/2, (S_H - text.pause->get_mTexture_h())/2);
     SDL_RenderPresent(mysdl.gRenderer);
+}
+
+
+Ltexture* init_text(mySDL& mysdl, const string& text, const int size, const SDL_Color& col)
+{
+    Ltexture* newText = new Ltexture {mysdl.gRenderer, text, size, col};
+    if (!newText->get_Ltexture_status())
+    {
+        mysdl.all_init_ok = false;
+        return nullptr;
+    }
+    return newText;
 }
