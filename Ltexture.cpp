@@ -154,3 +154,9 @@ DeckTexture::~DeckTexture()
 {
     free();
 }
+
+void DeckTexture::draw_()
+{
+    render(upleftcorner.x, upleftcorner.y);
+}
+ 

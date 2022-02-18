@@ -1,7 +1,16 @@
 #include "object_list.hpp"
 
-
 void draw_node(Drawable_listNode* node)
+//template<class T>
+//void draw_node(T* node)
+{
+    if (!node) return;
+    draw(*node->object);
+    node = node->next;
+    draw_node(node);
+}
+
+void draw_node(DeckTexture_listNode* node)
 {
     if (!node) return;
     draw(*node->object);

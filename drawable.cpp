@@ -16,6 +16,13 @@ Drawable::~Drawable()
 
 //Отрисовка объекта Drawable
 void draw(Drawable& object)
+//template<class T>
+//void draw(T& object)
+{
+    object.draw_();
+}
+
+void draw(DeckTexture& object)
 {
     object.draw_();
 }

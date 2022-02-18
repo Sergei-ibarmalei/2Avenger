@@ -3,7 +3,7 @@
 Hero* init_hero(mySDL& mysdl, const string& file_name);
 Backgrounds* init_backs(mySDL& mysdl);
 Starsky* init_sky(mySDL& mysdl, const string& file_name);
-Object_list<Drawable_listNode>* init_hero_bullet_list();
+//Object_list<Drawable_listNode>* init_hero_bullet_list();
 Fl* init_fleet(mySDL& mysdl, const string& file_name, int count);
 Ltexture* init_text(mySDL& mysdl, const string& text, const int size, const SDL_Color& col);
 
@@ -123,15 +123,12 @@ Starsky* init_sky(mySDL& mysdl, const string& file_name)
 
 void init_bullet_list(mySDL& mysdl, bullet_type& bullets)
 {
-    bullets.HeroBulletList = init_hero_bullet_list();
+
+    bullets.HeroBulletList = new Object_list<Drawable_listNode> {};
     if (!bullets.HeroBulletList) mysdl.all_init_ok = false;
 }
 
-Object_list<Drawable_listNode>* init_hero_bullet_list()
-{
-    Object_list<Drawable_listNode>* heroBulletList = new Object_list<Drawable_listNode> {};
-    return heroBulletList;
-}
+
 
 void init_fleet_type(fleet_type& fleet, mySDL& mysdl, const string& file_name)
 {
@@ -206,11 +203,6 @@ void close_fon(game_fon_type& fon)
     fon.backs = nullptr;
 }
 
-void close_game_text(text_type& game_text)
-{
-    delete game_text.pause;
-    game_text.pause = nullptr;
-}
 
 
 void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_item_type& item)
@@ -221,7 +213,7 @@ void Hero_walking_intro(mySDL& mysdl, hero_type& hero, game_fon_type& fon, game_
         fon.sky->move();
         hero.hero->move_();
         draw(*hero.hero);
-        SDL_RenderPresent(mysdl.gRenderer);
+        //SDL_RenderPresent(mysdl.gRenderer);
 }
 
 void main_draw(hero_type& hero, game_fon_type& fon, bullet_type& bullets, game_item_type& item, fleet_type& fleet)
@@ -232,25 +224,18 @@ void main_draw(hero_type& hero, game_fon_type& fon, bullet_type& bullets, game_i
     fleet.three_alien_fighter->Draw();
 }
 
-
-void init_text_type(mySDL& mysdl, text_type& game_text)
+void draw_deck(const mySDL& mysdl, game_gui_type& gui)
 {
-    SDL_Color pause_color = {0xFF, 0x0, 0x0, 0xFF};
-    
-/*     game_text.pause = new Ltexture {mysdl.gRenderer, "PAUSE", 78, pause_color};
-    if (!game_text.pause->get_Ltexture_status())
-    {
-        mysdl.all_init_ok = false;
-        return;
-    } */
-    game_text.pause = init_text(mysdl, "PAUSE", 78, pause_color);
-    //game_text.pause->TextColor() = pause_color;
-    
+    gui.deck->draw_decka(mysdl);
+    gui.deck->draw_herolives(mysdl);
 }
 
-void show_pause(const mySDL& mysdl, const text_type& text)
+
+
+void show_pause(const mySDL& mysdl, const game_gui_type& gui)
 {
-    text.pause->render( (S_W - text.pause->get_mTexture_w())/2, (S_H - text.pause->get_mTexture_h())/2);
+    //text.pause->render( (S_W - text.pause->get_mTexture_w())/2, (S_H - text.pause->get_mTexture_h())/2);
+    gui.text_pause->render( (S_W - gui.text_pause->get_mTexture_w())/2, (S_H - gui.text_pause->get_mTexture_h())/2);
     SDL_RenderPresent(mysdl.gRenderer);
 }
 
@@ -265,3 +250,23 @@ Ltexture* init_text(mySDL& mysdl, const string& text, const int size, const SDL_
     }
     return newText;
 }
+
+void init_game_gui(mySDL& mysdl, game_gui_type& gui)
+{
+    SDL_Color pause_color = {0xFF, 0x0, 0x0, 0xFF};
+    gui.text_pause = init_text(mysdl, gui.string_pause, TEXT_PAUSE_HEIGHT, pause_color);
+
+    gui.deck = new Decka {mysdl, gui.decka_image, gui.decka_onehero};
+    if (!mysdl.all_init_ok) return;
+    
+}
+
+void close_game_gui(game_gui_type& gui)
+{
+    delete gui.text_pause;
+    gui.text_pause = nullptr;
+    delete gui.deck;
+    gui.deck = nullptr;
+    
+}
+

@@ -1,5 +1,6 @@
 #include "engine.hpp"
 #include "sdl_init.hpp"
+//#include "Decka.hpp"
 
 static mySDL mysdl;
 
@@ -11,7 +12,9 @@ int main(int argc, char* argv[])
     bullet_type bulletList;
     fleet_type fleet;
     game_item_type game_item;
-    text_type game_text;
+    game_gui_type gui;
+    //text_type game_text;
+
 
 
     if(!init(mysdl, "2Avenger")) return 1;
@@ -20,8 +23,7 @@ int main(int argc, char* argv[])
     init_bullet_list(mysdl, bulletList);
     init_fleet_type(fleet, mysdl, "small_alien.png");
     init_game_item_type(game_item);
-    init_text_type(mysdl,  game_text);
-
+    init_game_gui(mysdl, gui);
     if (!mysdl.all_init_ok) return 1;
 
     while (!game_item.game_quit)
@@ -59,12 +61,14 @@ int main(int argc, char* argv[])
         {
 
             Hero_walking_intro(mysdl, hero, game_fon, game_item);
+            draw_deck(mysdl, gui);
             continue;
         }
         main_draw(hero, game_fon, bulletList, game_item, fleet);
+        draw_deck(mysdl, gui);
         if (game_item.game_paused)
         {
-            show_pause(mysdl, game_text);
+            show_pause(mysdl, gui);
             continue;
         }
 
@@ -76,13 +80,15 @@ int main(int argc, char* argv[])
         }
         fleet.three_alien_fighter->Move(fleet.time_to_cleanup_fleet);
         //show_pause(game_text);
+        //decka.draw_decka();
         SDL_RenderPresent(mysdl.gRenderer);
     }
     close_fon(game_fon);
     close_hero(hero);
     close_fleet(fleet);
     close_bullet_list(bulletList);
-    close_game_text(game_text);
+    //close_game_text(game_text);
+    close_game_gui(gui);
     
 
     close(mysdl);

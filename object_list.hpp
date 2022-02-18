@@ -31,8 +31,23 @@ struct DeckTexture_listNode
     }
 };
 
+struct Ltexture_listNode
+{
+    Ltexture* object = nullptr;
+    Ltexture_listNode* next = nullptr;
 
+    Ltexture_listNode(Ltexture* pl) : object(pl) {}
+    ~Ltexture_listNode()
+    {
+        delete object;
+        object = nullptr;
+    }
+};
+
+//template<class T>
+//void draw_node(T* node);
 void draw_node(Drawable_listNode* node);
+void draw_node(DeckTexture_listNode* node);
 void move_node(Drawable_listNode* node, bool& time_to_cleanup_bhl);
 
 template <class T>
@@ -49,6 +64,7 @@ class Object_list
     Object_list(const T&) {}
     ~Object_list();
     void Push_back(Drawable* object);
+    void Push_back(DeckTexture* object);
     T* First() {return first;}
     void CleanUP_from_invisible();
 };
@@ -88,6 +104,19 @@ void Object_list<T>::Push_back(Drawable* object)
     }
     last->next = p;
     last = p;
+}
+
+template<class T>
+void Object_list<T>::Push_back(DeckTexture* object)
+{
+    T* p = new T {object};
+    if (Is_empty())
+    {
+        first = last = p;
+        return;
+    }
+    last->next = p;
+    last = p;   
 }
 
 template <class T>

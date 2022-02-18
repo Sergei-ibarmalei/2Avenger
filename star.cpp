@@ -13,7 +13,7 @@ void Star::move_()
 Star::Star() : Drawable()
 {
     upleftcorner.x = getRandom(0, S_W);
-    upleftcorner.y = getRandom(0, S_H);
+    upleftcorner.y = getRandom(0, S_H - DECKA_HEIGHT);
     lt = nullptr;
     kind = Star_kind::SLOW_STAR;
 }
@@ -29,7 +29,7 @@ void Star::check_star_and_mainborder()
     if (upleftcorner.x < LEFT_BORDER)
     {
         upleftcorner.x = getRandom(S_W, S_W+300);
-        upleftcorner.y = getRandom(0, S_H);
+        upleftcorner.y = getRandom(0, S_H - DECKA_HEIGHT);
     }
 }
 

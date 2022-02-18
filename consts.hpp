@@ -6,7 +6,7 @@ const int S_H {600};
 
 enum class Move_direction {UP, DOWN, LEFT, RIGHT, NONE};
 
-
+const int HERO_LIVES {3};
 
 //enum class object_position {UP, CENTER, DOWN, EMPTY};
 enum class hero_position {UP, CENTER, DOWN};
@@ -24,11 +24,14 @@ typedef struct
 }plot_type;
 
 
+//DECKA
+const int DECKA_HEIGHT {100};
+
 // BORDER
 const int LEFT_BORDER  {0};
 const int RIGHT_BORDER {S_W};
 const int UP_BORDER    {0};
-const int DOWN_BORDER  {S_H};
+const int DOWN_BORDER  {S_H - DECKA_HEIGHT};
 
 //STAR
 enum class Star_kind {FAST_STAR, SLOW_STAR};
@@ -50,5 +53,9 @@ const int BULLET_START_X_SHIFT {3};
 //GAME_HISTORY_COUNT
  const int GAME_HISTORY {3};
  enum class GAME_HISTORY_PART {FIRST, SECOND, THIRD, ALL};
+
+
+ //TEXT
+ const int TEXT_PAUSE_HEIGHT {50};
 
 #endif
