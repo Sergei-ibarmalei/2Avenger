@@ -20,7 +20,7 @@ class Decka
     Decka(mySDL& mysdl, const string& file_name_decka, const string& file_name_onehero);
     ~Decka();
     Decka(const Decka& ) {}
-    void draw_decka(const mySDL& mysdl);
+    void draw_decka();
     void draw_herolives(const mySDL& mysdl);
 
 

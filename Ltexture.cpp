@@ -24,6 +24,15 @@ Ltexture::Ltexture(SDL_Renderer* renderer_, const string& text, int textSize, co
 
 }
 
+Ltexture::Ltexture()
+{
+    mTexture = nullptr;
+    renderer = nullptr;
+    color = {0xFF, 0x0, 0x0, 0xFF};
+    mTexture_w = mTexture_h = 0;
+}
+
+
 Ltexture::~Ltexture()
 {
     free();
@@ -158,5 +167,10 @@ DeckTexture::~DeckTexture()
 void DeckTexture::draw_()
 {
     render(upleftcorner.x, upleftcorner.y);
+}
+
+DeckTexture::DeckTexture()
+{
+    upleftcorner = {0, 0};
 }
  

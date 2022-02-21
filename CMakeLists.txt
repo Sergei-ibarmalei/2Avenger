@@ -4,6 +4,7 @@ project(main)
 #SET(MYCOMPILE_FLAGS "-Wall")
 
 set(SOURCES
+          score.cpp
           Decka.cpp
           engine.cpp
           object_list.cpp

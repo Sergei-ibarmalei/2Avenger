@@ -226,15 +226,15 @@ void main_draw(hero_type& hero, game_fon_type& fon, bullet_type& bullets, game_i
 
 void draw_deck(const mySDL& mysdl, game_gui_type& gui)
 {
-    gui.deck->draw_decka(mysdl);
+    gui.deck->draw_decka();
     gui.deck->draw_herolives(mysdl);
+    gui.gui_score->draw_score(mysdl);
 }
 
 
 
 void show_pause(const mySDL& mysdl, const game_gui_type& gui)
 {
-    //text.pause->render( (S_W - text.pause->get_mTexture_w())/2, (S_H - text.pause->get_mTexture_h())/2);
     gui.text_pause->render( (S_W - gui.text_pause->get_mTexture_w())/2, (S_H - gui.text_pause->get_mTexture_h())/2);
     SDL_RenderPresent(mysdl.gRenderer);
 }
@@ -254,10 +254,14 @@ Ltexture* init_text(mySDL& mysdl, const string& text, const int size, const SDL_
 void init_game_gui(mySDL& mysdl, game_gui_type& gui)
 {
     SDL_Color pause_color = {0xFF, 0x0, 0x0, 0xFF};
+    SDL_Color score_color = {0xFF, 0xFF, 0x0, 0xFF};
     gui.text_pause = init_text(mysdl, gui.string_pause, TEXT_PAUSE_HEIGHT, pause_color);
 
     gui.deck = new Decka {mysdl, gui.decka_image, gui.decka_onehero};
     if (!mysdl.all_init_ok) return;
+    
+    //Инициализация счета 
+    gui.gui_score = new Score {mysdl, 48, score_color};
     
 }
 
@@ -267,6 +271,8 @@ void close_game_gui(game_gui_type& gui)
     gui.text_pause = nullptr;
     delete gui.deck;
     gui.deck = nullptr;
+    delete gui.gui_score;
+    gui.gui_score = nullptr;
     
 }
 

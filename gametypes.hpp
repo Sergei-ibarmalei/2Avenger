@@ -7,6 +7,7 @@
 #include "object_list.hpp"
 #include "Decka.hpp"
 #include "fl.hpp"
+#include "score.hpp"
 
 //enum class GAME_HISTORY_PART {FIRST, SECOND, ALL};
 
@@ -54,6 +55,7 @@ typedef struct
 
 
 
+
 typedef struct
 {
     Ltexture* text_pause = nullptr;
@@ -61,6 +63,7 @@ typedef struct
     const string decka_onehero = "onehero.png";
     const string string_pause  = "PAUSE";
     Decka* deck;
+    Score* gui_score;
 }game_gui_type;
 
 

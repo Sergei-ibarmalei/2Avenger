@@ -1,19 +1,17 @@
 #include "engine.hpp"
 #include "sdl_init.hpp"
-//#include "Decka.hpp"
 
 static mySDL mysdl;
 
 
 int main(int argc, char* argv[])
 {
-    hero_type hero;
-    game_fon_type game_fon; 
-    bullet_type bulletList;
-    fleet_type fleet;
-    game_item_type game_item;
-    game_gui_type gui;
-    //text_type game_text;
+    hero_type       hero;
+    game_fon_type   game_fon; 
+    bullet_type     bulletList;
+    fleet_type      fleet;
+    game_item_type  game_item;
+    game_gui_type   gui;
 
 
 
@@ -55,6 +53,7 @@ int main(int argc, char* argv[])
         }
 
 
+
         SDL_SetRenderDrawColor(mysdl.gRenderer, 0x0, 0x0, 0x0, 0xFF);
         SDL_RenderClear(mysdl.gRenderer);
         if (hero.hero->Is_walking_intro()) 
@@ -79,15 +78,15 @@ int main(int argc, char* argv[])
             bulletList.time_to_cleanup_bhl = false;
         }
         fleet.three_alien_fighter->Move(fleet.time_to_cleanup_fleet);
-        //show_pause(game_text);
-        //decka.draw_decka();
         SDL_RenderPresent(mysdl.gRenderer);
+
+        //Проверка на правильность работы и инициализации в процессе
+        if (!mysdl.all_init_ok) game_item.game_quit = true;
     }
     close_fon(game_fon);
     close_hero(hero);
     close_fleet(fleet);
     close_bullet_list(bulletList);
-    //close_game_text(game_text);
     close_game_gui(gui);
     
 

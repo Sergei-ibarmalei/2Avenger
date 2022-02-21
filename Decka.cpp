@@ -43,7 +43,7 @@ Decka::~Decka()
 }
 
 //Отрисовка нижней деки
-void Decka::draw_decka(const mySDL& mysdl)
+void Decka::draw_decka()
 {
     decka_image->render(deckaUpLeftCorner.x, deckaUpLeftCorner.y);
     //SDL_RenderPresent(mysdl.gRenderer);
