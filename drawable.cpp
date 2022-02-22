@@ -14,18 +14,7 @@ Drawable::~Drawable()
 {
 }
 
-//Отрисовка объекта Drawable
-void draw(Drawable& object)
-//template<class T>
-//void draw(T& object)
-{
-    object.draw_();
-}
 
-void draw(DeckTexture& object)
-{
-    object.draw_();
-}
 
 plot_type* making_stright(const plot_type& upleftcorner, int length, Move_direction direction)
 {

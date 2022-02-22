@@ -30,10 +30,12 @@ class Drawable
 
 };
 
-void draw(Drawable& object);
-void draw(DeckTexture& object);
-//template<class T>
-//void draw(T& object);
+
+template<class T>
+void draw(T& object)
+{
+    object.draw_();
+}
 
 plot_type* making_stright(const plot_type& upleftcorner, int length, Move_direction direction);
 
